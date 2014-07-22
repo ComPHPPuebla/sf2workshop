@@ -1,0 +1,23 @@
+<?php $displayName = get_user_information('display_name') ?>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/books.php">
+                Bookshare <small>Welcome <?php echo $displayName ?></small>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="share-book.php">New book</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+            <?php include 'theme/search-form.phtml' ?>
+        </div>
+    </div>
+</nav>
