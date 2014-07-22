@@ -6,6 +6,8 @@ The goal of this demo application, is to start using the Symfony2 components in 
 Once the components have been studied separately, the application can be modified to use the
 full-stack framework.
 
+**NOTE:** This application is just a starter, this code is in no way production code.
+
 This is a web application to share e-books in .pdf format, users win or loose points by using
 the application.
 
