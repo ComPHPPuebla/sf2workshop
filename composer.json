@@ -1,0 +1,29 @@
+{
+    "name": "cfe/bookshare",
+    "description": "Web application to share e-books.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luis Montealegre",
+            "email": "montealegreluis@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">5.5",
+        "ext-pdo": "*",
+        "symfony/http-foundation": "~2.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "BookShare": "src/"
+        },
+        "files": [
+            "app/config/constants.php",
+            "app/functions/db.php",
+            "app/functions/session.php"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}

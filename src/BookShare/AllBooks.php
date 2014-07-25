@@ -25,4 +25,9 @@ interface AllBooks
      * @param Book $book
      */
     public function add(Book $book);
+
+    /**
+     * @return Book[]
+     */
+    public function withBestRate();
 }

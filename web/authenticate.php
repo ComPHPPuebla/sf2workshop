@@ -1,12 +1,11 @@
 <?php
+require '../vendor/autoload.php';
+
 if (empty($_POST['username']) || empty($_POST['password'])) {
     echo json_encode(['error' => 'Enter your username and password.']);
 
     return;
 }
-
-require 'config/constants.php';
-require 'functions/db.php';
 
 $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
 $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
