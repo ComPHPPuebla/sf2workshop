@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="view-books" path="/books">
+        <default key="_controller">view_books</default>
+    </route>
+    <route id="view-book" path="/books/{bookId}">
+        <default key="_controller">view_book</default>
+        <requirement key="bookId">\d+</requirement>
+    </route>
+    <route id="search-books" path="/books/search">
+        <default key="_controller">search_books</default>
+    </route>
+
+    <route id="login" path="/login">
+        <default key="_controller">login</default>
+    </route>
+    <route id="authenticate" path="/authenticate" methods="POST">
+        <default key="_controller">authenticate</default>
+    </route>
+    <route id="logout" path="/logout">
+        <default key="_controller">logout</default>
+    </route>
+
+</routes>
