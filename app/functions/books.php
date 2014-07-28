@@ -2,6 +2,8 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use BookShare\Book;
+use BookShare\Author;
 use BookShare\Persistence\Pdo\AllBooks;
 use Security\Persistence\Pdo\AllUsers;
 
@@ -24,6 +26,23 @@ function view_book(Request $request)
     return render_response('view-book.phtml', ['book' => $allBooks->ofBookId($bookId)]);
 }
 
+function download_book(Request $request)
+{
+	is_user_logged();
+
+    $bookId = $request->attributes->getInt('bookId');
+    $allBooks = new AllBooks(db_connect());
+
+	/*
+	 * add points to user
+	 */
+    $book = $allBooks->ofBookId($bookId);
+
+   	header("Content-disposition: attachment; filename={$book['filename']}");
+	header("Content-type: application/pdf");
+	readfile("../uploads/{$book['filename']}");
+}
+
 function search_books(Request $request)
 {
     is_user_logged();
@@ -41,7 +60,35 @@ function search_books(Request $request)
     }
 
     return render_response('search-books.phtml', ['books' => $books]);
+}
 
+function share_book()
+{
+	is_user_logged();
+
+	$allBooks = new AllBooks(db_connect());
+	$allBooks = $allBooks->AllAuthors();
+
+	return ['authors' => $allBooks];
+}
+
+function save_book(Request $request)
+{
+	$title = $request->request->filter('title');
+	$authorId = $request->request->filter('author-id');
+	$file = $request->files->get('file');
+	$filename = $file->getClientOriginalName();
+	$file->move('../uploads/',$filename);
+
+	$conn = db_connect();
+	$allBooks = new AllBooks($conn);
+	$allBooks->add(new Book($title, $filename, new Author($authorId)));
+
+	$sql = 'UPDATE user SET points = points + ? WHERE username = ?';
+	query($conn, $sql, [APP_POINTS_SHARE_BOOK, get_user_information('username')]);
+
+	header('Location: /index.php/books');
+	exit();
 }
 
 function login()

@@ -123,4 +123,18 @@ QUERY;
 
         return $statement->fetchAll();
     }
+
+	public function allAuthors()
+	{
+		$sql = <<<QUERY
+			SELECT
+				a.author_id,
+				a.name
+			 FROM author a
+QUERY;
+		$statement = $this->connection->prepare($sql);
+		$statement->execute();
+
+		 return $statement->fetchAll();
+	}
 }

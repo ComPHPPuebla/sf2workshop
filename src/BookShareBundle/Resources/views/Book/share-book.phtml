@@ -1,28 +1,12 @@
-<?php
-require 'config/constants.php';
-require 'functions/db.php';
-require 'functions/session.php';
-
-is_user_logged();
-
-$conn = db_connect();
-$sql = <<<QUERY
-    SELECT
-        a.author_id,
-        a.name
-     FROM author a
-QUERY;
-$authors = query_fetch_all($conn, $sql);
-?>
 <!DOCTYPE html>
 <html>
-    <head><?php include 'theme/header.phtml' ?></head>
+    <head><?php include '../app/theme/header.phtml' ?></head>
     <body>
         <article class="container">
-            <?php include 'theme/navigation.phtml' ?>
-            <?php include 'theme/branding.phtml' ?>
+            <?php include '../app/theme/navigation.phtml' ?>
+            <?php include '../app/theme/branding.phtml' ?>
             <h2>Share a book</h2>
-            <form action="save-book.php" method="post" enctype="multipart/form-data">
+            <form action="/index.php/books/save" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" name="title" class="form-control">
@@ -44,6 +28,6 @@ $authors = query_fetch_all($conn, $sql);
                 <input type="submit" name="submit" value="Submit" class="btn btn-default">
             </form>
         </article>
-        <?php include 'theme/scripts.phtml' ?>
+        <?php include '../app/theme/scripts.phtml' ?>
     </body>
 </html>
