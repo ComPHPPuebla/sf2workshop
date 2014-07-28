@@ -28,9 +28,13 @@ $viewBook = new Route(
     ['bookId' => '\d+']
 );
 $searchBooks = new Route('/books/search',['_controller' => 'search_books']);
+$saveBook = new Route('/books/save',['_controller' => 'save_book']);
+
 $routes->add('view-books', $viewBooks);
 $routes->add('view-book', $viewBook);
 $routes->add('search-books',$searchBooks);
+$routes->add('save-book',$saveBook);
+
 $context = new RequestContext();
 $context->fromRequest($request);
 
