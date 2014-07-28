@@ -20,19 +20,21 @@ function render_template($template, array $result)
 $request = Request::createFromGlobals();
 
 $routes = new RouteCollection();
-
 $viewBooks = new Route('/books', ['_controller' => 'view_books']);
 $viewBook = new Route(
     '/books/{bookId}',
     ['_controller' => 'view_book'],
     ['bookId' => '\d+']
 );
+$sharebooks = new Route('/books', ['controller' => 'share_books']);
 $searchBooks = new Route('/books/search',['_controller' => 'search_books']);
 $routes->add('view-books', $viewBooks);
 $routes->add('view-book', $viewBook);
 $routes->add('search-books',$searchBooks);
+$routes->add('share-book', $sharebooks);
 $context = new RequestContext();
 $context->fromRequest($request);
+
 
 $matcher = new UrlMatcher($routes, $context);
 

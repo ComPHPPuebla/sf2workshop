@@ -40,3 +40,14 @@ function search_books(Request $request)
     return ['books' => $books];
 
 }
+
+function share_books()
+{
+	is_user_logged();
+
+	$allBooks = new AllBooks(db_connect());
+	
+	$AllBooks = $allBooks->AllAuthors();
+
+		return ['authors' => $allBooks];	
+}
