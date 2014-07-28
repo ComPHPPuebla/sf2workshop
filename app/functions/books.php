@@ -1,6 +1,8 @@
 <?php
 use BookShare\Persistence\Pdo\AllBooks;
 use Symfony\Component\HttpFoundation\Request;
+use BookShare\Book;
+use BookShare\Author;
 use Security\Persistence\Pdo\AllUsers;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -41,6 +43,26 @@ function search_books(Request $request)
 
     return ['books' => $books];
 
+}
+
+function save_book(Request $request)
+{
+	$title = $request->request->filter('title');
+	$authorId = $request->request->filter('author-id');
+	$file = $request->files->get('file');
+	$filename = $file->getClientOriginalName();
+	$file->move('uploads/',$filename);
+	//move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $filename);
+
+	$conn = db_connect();
+	$allBooks = new AllBooks($conn);
+	$allBooks->add(new Book($title, $filename, new Author($authorId)));
+
+	$sql = 'UPDATE user SET points = points + ? WHERE username = ?';
+	query($conn, $sql, [APP_POINTS_SHARE_BOOK, get_user_information('username')]);
+
+	header('Location: /index.php/books');
+	exit();
 }
 
 function login()
