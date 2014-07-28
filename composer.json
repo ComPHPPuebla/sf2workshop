@@ -12,7 +12,8 @@
         "php": ">5.5",
         "ext-pdo": "*",
         "symfony/http-foundation": "~2.0",
-        "symfony/routing": "~2.0"
+        "symfony/routing": "~2.0",
+        "symfony/config": "~2.0"
     },
     "autoload": {
         "psr-0": {
