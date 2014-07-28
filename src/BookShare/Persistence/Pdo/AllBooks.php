@@ -123,8 +123,8 @@ QUERY;
 
         return $statement->fetchAll();
     }
-	
-	public function AllAuthors()
+
+	public function allAuthors()
 	{
 		$sql = <<<QUERY
 			SELECT
@@ -132,9 +132,9 @@ QUERY;
 				a.name
 			 FROM author a
 QUERY;
-		$authors = $this->connection->prepare($sql);
-		$authors->execute();
-		
+		$statement = $this->connection->prepare($sql);
+		$statement->execute();
+
 		 return $statement->fetchAll();
 	}
 }
