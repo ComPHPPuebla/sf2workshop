@@ -35,7 +35,8 @@ function download_book(Request $request)
 	/*
 	 * add points to user
 	 */
-	
+    $book = $allBooks->ofBookId($bookId);
+
    	header("Content-disposition: attachment; filename={$book['filename']}");
 	header("Content-type: application/pdf");
 	readfile("../uploads/{$book['filename']}");
@@ -61,24 +62,23 @@ function search_books(Request $request)
 
 }
 
-function share_books()
+function share_book()
 {
 	is_user_logged();
 
 	$allBooks = new AllBooks(db_connect());
-	
-	$AllBooks = $allBooks->AllAuthors();
+	$allBooks = $allBooks->AllAuthors();
 
-		return ['authors' => $allBooks];	
+	return ['authors' => $allBooks];
 }
+
 function save_book(Request $request)
 {
 	$title = $request->request->filter('title');
 	$authorId = $request->request->filter('author-id');
 	$file = $request->files->get('file');
 	$filename = $file->getClientOriginalName();
-	$file->move('uploads/',$filename);
-	//move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $filename);
+	$file->move('../uploads/',$filename);
 
 	$conn = db_connect();
 	$allBooks = new AllBooks($conn);

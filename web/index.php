@@ -20,24 +20,21 @@ function render_template($template, array $result)
 $request = Request::createFromGlobals();
 
 $routes = new RouteCollection();
-$viewBooks = new Route('/books', ['_controller' => 'view_books']);
 
+$viewBooks = new Route('/books', ['_controller' => 'view_books']);
 $viewBook = new Route(
     '/books/{bookId}',
     ['_controller' => 'view_book'],
     ['bookId' => '\d+']
 );
-$sharebooks = new Route('/books', ['controller' => 'share_books']);
-
+$shareBook = new Route('/books/share', ['_controller' => 'share_book']);
 $downloadBook = new Route(
-		'/books/download/{bookId}',
-		['_controller' => 'download_book'],
-		['bookId' => '\d+']
+	'/books/download/{bookId}',
+	['_controller' => 'download_book'],
+	['bookId' => '\d+']
 );
-
 $searchBooks = new Route('/books/search',['_controller' => 'search_books']);
 $saveBook = new Route('/books/save',['_controller' => 'save_book']);
-
 
 $login = new Route('/login', ['_controller' => 'login']);
 $logout = new Route('/logout', ['_controller' => 'logout']);
@@ -48,7 +45,7 @@ $routes->add('view-books', $viewBooks);
 $routes->add('view-book', $viewBook);
 $routes->add('download-book', $downloadBook);
 $routes->add('search-books',$searchBooks);
-$routes->add('share-book', $sharebooks);
+$routes->add('share-book', $shareBook);
 $routes->add('save-book',$saveBook);
 
 $routes->add('login', $login);
@@ -57,7 +54,6 @@ $routes->add('authenticate', $authenticate);
 
 $context = new RequestContext();
 $context->fromRequest($request);
-
 
 $matcher = new UrlMatcher($routes, $context);
 
