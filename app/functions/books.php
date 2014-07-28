@@ -61,6 +61,16 @@ function search_books(Request $request)
 
 }
 
+function share_books()
+{
+	is_user_logged();
+
+	$allBooks = new AllBooks(db_connect());
+	
+	$AllBooks = $allBooks->AllAuthors();
+
+		return ['authors' => $allBooks];	
+}
 function save_book(Request $request)
 {
 	$title = $request->request->filter('title');
@@ -137,3 +147,4 @@ function authenticate(Request $request)
         http_response_code(500);
     }
 }
+

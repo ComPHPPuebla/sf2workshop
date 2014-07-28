@@ -20,7 +20,6 @@ function render_template($template, array $result)
 $request = Request::createFromGlobals();
 
 $routes = new RouteCollection();
-
 $viewBooks = new Route('/books', ['_controller' => 'view_books']);
 
 $viewBook = new Route(
@@ -28,6 +27,7 @@ $viewBook = new Route(
     ['_controller' => 'view_book'],
     ['bookId' => '\d+']
 );
+$sharebooks = new Route('/books', ['controller' => 'share_books']);
 
 $downloadBook = new Route(
 		'/books/download/{bookId}',
@@ -48,6 +48,7 @@ $routes->add('view-books', $viewBooks);
 $routes->add('view-book', $viewBook);
 $routes->add('download-book', $downloadBook);
 $routes->add('search-books',$searchBooks);
+$routes->add('share-book', $sharebooks);
 $routes->add('save-book',$saveBook);
 
 $routes->add('login', $login);
@@ -56,6 +57,7 @@ $routes->add('authenticate', $authenticate);
 
 $context = new RequestContext();
 $context->fromRequest($request);
+
 
 $matcher = new UrlMatcher($routes, $context);
 
