@@ -6,6 +6,7 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Loader\XmlFileLoader;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
 require '../vendor/autoload.php';
 
@@ -36,7 +37,11 @@ try {
     $parameters = $router->match($request->getPathInfo());
     $request->attributes->add($parameters);
 
-    $response = call_user_func_array($parameters['_controller'], [$request]);
+    $resolver = new ControllerResolver();
+    $controller = $resolver->getController($request);
+    $arguments = $resolver->getArguments($request, $controller);
+
+    $response = call_user_func_array($controller, $arguments);
 
 } catch (ResourceNotFoundException $exception) {
     $response = new Response('The page you are looking for does not exist.');

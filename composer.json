@@ -13,12 +13,14 @@
         "ext-pdo": "*",
         "symfony/http-foundation": "~2.0",
         "symfony/routing": "~2.0",
-        "symfony/config": "~2.0"
+        "symfony/config": "~2.0",
+        "symfony/http-kernel": "~2.0"
     },
     "autoload": {
         "psr-0": {
             "BookShare": "src/",
-            "Security": "src/"
+            "Security": "src/",
+            "Framework": "src/"
         },
         "files": [
             "app/config/constants.php",

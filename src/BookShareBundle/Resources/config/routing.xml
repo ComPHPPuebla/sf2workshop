@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="view-books" path="/books">
-        <default key="_controller">view_books</default>
+        <default key="_controller">BookShareBundle\Controllers\ViewBooksController::viewBooksAction</default>
     </route>
     <route id="view-book" path="/books/{bookId}">
         <default key="_controller">view_book</default>

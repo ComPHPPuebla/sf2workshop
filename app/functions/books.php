@@ -10,15 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-function view_books()
-{
-    is_user_logged();
-
-    $allBooks = new AllBooks(db_connect());
-
-    return render_response('view-books.phtml', ['books' => $allBooks->withBestRate()]);
-}
-
 function view_book(Request $request)
 {
     is_user_logged();
