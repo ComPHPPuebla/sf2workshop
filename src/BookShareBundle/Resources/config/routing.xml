@@ -13,7 +13,17 @@
     <route id="search-books" path="/books/search">
         <default key="_controller">search_books</default>
     </route>
-
+    <route id="download-book" path="/books/download/{bookId}">
+        <default key="_controller">download_book</default>
+        <requirement key="bookId">\d+</requirement>
+    </route>
+    <route id="share-book" path="/books/share">
+        <default key="_controller">share_book</default>
+    </route>
+    <route id="save-book" path="/books/save" methods="POST">
+        <default key="_controller">save_book</default>
+    </route>
+    
     <route id="login" path="/login">
         <default key="_controller">login</default>
     </route>
