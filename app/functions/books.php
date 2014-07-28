@@ -6,6 +6,9 @@ use BookShare\Book;
 use BookShare\Author;
 use BookShare\Persistence\Pdo\AllBooks;
 use Security\Persistence\Pdo\AllUsers;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 function view_books()
 {
@@ -38,9 +41,15 @@ function download_book(Request $request)
 	 */
     $book = $allBooks->ofBookId($bookId);
 
-   	header("Content-disposition: attachment; filename={$book['filename']}");
-	header("Content-type: application/pdf");
-	readfile("../uploads/{$book['filename']}");
+    $response = new BinaryFileResponse("../uploads/{$book['filename']}");
+    $disposition = $response->headers->makeDisposition(
+        ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        $book['filename']
+    );
+
+    $response->headers->set('Content-Disposition', $disposition);
+
+    return $response;
 }
 
 function search_books(Request $request)
@@ -69,7 +78,7 @@ function share_book()
 	$allBooks = new AllBooks(db_connect());
 	$allBooks = $allBooks->AllAuthors();
 
-	return ['authors' => $allBooks];
+	return render_response('share-book.phtml', ['authors' => $allBooks]);
 }
 
 function save_book(Request $request)
@@ -87,8 +96,7 @@ function save_book(Request $request)
 	$sql = 'UPDATE user SET points = points + ? WHERE username = ?';
 	query($conn, $sql, [APP_POINTS_SHARE_BOOK, get_user_information('username')]);
 
-	header('Location: /index.php/books');
-	exit();
+	return new RedirectResponse('/index.php/books');
 }
 
 function login()
@@ -111,7 +119,7 @@ function authenticate(Request $request)
     if (!$request->request->has('username') || !$request->request->has('password')) {
 
         return render_response(
-            'authenticate.phtml', ['error' => 'Enter your username and password.']
+            'authenticate.phtml', ['result' => ['error' => 'Enter your username and password.']]
         );
     }
 
@@ -126,12 +134,16 @@ function authenticate(Request $request)
         $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
         if (!$user) {
 
-            return render_response('authenticate.phtml', ['error' => $invalidCredentialsMessage]);
+            return render_response('authenticate.phtml', [
+                'result' => ['error' => $invalidCredentialsMessage]
+            ]);
         }
 
         if (!password_verify($password, $user['password'])) {
 
-            return render_response('authenticate.phtml', ['error' => $invalidCredentialsMessage]);
+            return render_response('authenticate.phtml', [
+                'result' => ['error' => $invalidCredentialsMessage]
+            ]);
         }
 
         $user['password'] = null;
@@ -140,7 +152,7 @@ function authenticate(Request $request)
         $session->start();
         $session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
 
-        return render_response('authenticate.phtml', ['success' => true]);
+        return render_response('authenticate.phtml', ['result' => ['success' => true]]);
 
     } catch (PDOException $e) {
 
