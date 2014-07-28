@@ -1,10 +1,11 @@
 <?php
-use BookShare\Persistence\Pdo\AllBooks;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use BookShare\Book;
 use BookShare\Author;
+use BookShare\Persistence\Pdo\AllBooks;
 use Security\Persistence\Pdo\AllUsers;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 function view_books()
 {
@@ -12,7 +13,7 @@ function view_books()
 
     $allBooks = new AllBooks(db_connect());
 
-    return ['books' =>$allBooks->withBestRate()];
+    return render_response('view-books.phtml', ['books' => $allBooks->withBestRate()]);
 }
 
 function view_book(Request $request)
@@ -22,7 +23,7 @@ function view_book(Request $request)
     $bookId = $request->attributes->getInt('bookId');
     $allBooks = new AllBooks(db_connect());
 
-    return ['book' => $allBooks->ofBookId($bookId)];
+    return render_response('view-book.phtml', ['book' => $allBooks->ofBookId($bookId)]);
 }
 
 function download_book(Request $request)
@@ -58,8 +59,7 @@ function search_books(Request $request)
         $books = $allBooks->ofAuthorNameLike($searchTerm);
     }
 
-    return ['books' => $books];
-
+    return render_response('search-books.phtml', ['books' => $books]);
 }
 
 function share_book()
@@ -93,7 +93,7 @@ function save_book(Request $request)
 
 function login()
 {
-    return [];
+    return render_response('login.phtml');
 }
 
 function logout()
@@ -103,15 +103,16 @@ function logout()
     $session->clear();
     $session->invalidate();
 
-    header('Location: /index.php/login');
-    exit();
+    return new RedirectResponse('/index.php/login');
 }
 
 function authenticate(Request $request)
 {
     if (!$request->request->has('username') || !$request->request->has('password')) {
 
-        return ['error' => 'Enter your username and password.'];
+        return render_response(
+            'authenticate.phtml', ['error' => 'Enter your username and password.']
+        );
     }
 
     $username = $request->request->filter('username', null, false, FILTER_SANITIZE_STRING);
@@ -125,12 +126,12 @@ function authenticate(Request $request)
         $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
         if (!$user) {
 
-            return ['error' => $invalidCredentialsMessage];
+            return render_response('authenticate.phtml', ['error' => $invalidCredentialsMessage]);
         }
 
         if (!password_verify($password, $user['password'])) {
 
-            return ['error' => $invalidCredentialsMessage];
+            return render_response('authenticate.phtml', ['error' => $invalidCredentialsMessage]);
         }
 
         $user['password'] = null;
@@ -139,7 +140,7 @@ function authenticate(Request $request)
         $session->start();
         $session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
 
-        return ['success' => true];
+        return render_response('authenticate.phtml', ['success' => true]);
 
     } catch (PDOException $e) {
 
@@ -147,4 +148,3 @@ function authenticate(Request $request)
         http_response_code(500);
     }
 }
-
