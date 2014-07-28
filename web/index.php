@@ -22,11 +22,19 @@ $request = Request::createFromGlobals();
 $routes = new RouteCollection();
 
 $viewBooks = new Route('/books', ['_controller' => 'view_books']);
+
 $viewBook = new Route(
     '/books/{bookId}',
     ['_controller' => 'view_book'],
     ['bookId' => '\d+']
 );
+
+$downloadBook = new Route(
+		'/books/download/{bookId}',
+		['_controller' => 'download_book'],
+		['bookId' => '\d+']
+);
+
 $searchBooks = new Route('/books/search',['_controller' => 'search_books']);
 $saveBook = new Route('/books/save',['_controller' => 'save_book']);
 
@@ -38,6 +46,7 @@ $authenticate->setMethods(['POST']);
 
 $routes->add('view-books', $viewBooks);
 $routes->add('view-book', $viewBook);
+$routes->add('download-book', $downloadBook);
 $routes->add('search-books',$searchBooks);
 $routes->add('save-book',$saveBook);
 
