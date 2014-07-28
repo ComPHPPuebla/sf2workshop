@@ -21,6 +21,22 @@ function view_book(Request $request)
     return ['book' => $allBooks->ofBookId($bookId)];
 }
 
+function download_book(Request $request)
+{
+	is_user_logged();
+
+    $bookId = $request->attributes->getInt('bookId');
+    $allBooks = new AllBooks(db_connect());
+
+	/*
+	 * add points to user
+	 */
+	
+   	header("Content-disposition: attachment; filename={$book['filename']}");
+	header("Content-type: application/pdf");
+	readfile("../uploads/{$book['filename']}");
+}
+
 function search_books(Request $request)
 {
     is_user_logged();
