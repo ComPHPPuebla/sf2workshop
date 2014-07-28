@@ -3,6 +3,8 @@ use BookShare\Persistence\Pdo\AllBooks;
 use Symfony\Component\HttpFoundation\Request;
 use BookShare\Book;
 use BookShare\Author;
+use Security\Persistence\Pdo\AllUsers;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 function view_books()
 {
@@ -63,3 +65,59 @@ function save_book(Request $request)
 	exit();
 }
 
+function login()
+{
+    return [];
+}
+
+function logout()
+{
+    $session = new Session();
+    $session->start();
+    $session->clear();
+    $session->invalidate();
+
+    header('Location: /index.php/login');
+    exit();
+}
+
+function authenticate(Request $request)
+{
+    if (!$request->request->has('username') || !$request->request->has('password')) {
+
+        return ['error' => 'Enter your username and password.'];
+    }
+
+    $username = $request->request->filter('username', null, false, FILTER_SANITIZE_STRING);
+    $password = $request->request->filter('password', null, false, FILTER_SANITIZE_STRING);
+
+    try {
+
+        $allUsers = new AllUsers(db_connect());
+        $user = $allUsers->ofUsername($username);
+
+        $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
+        if (!$user) {
+
+            return ['error' => $invalidCredentialsMessage];
+        }
+
+        if (!password_verify($password, $user['password'])) {
+
+            return ['error' => $invalidCredentialsMessage];
+        }
+
+        $user['password'] = null;
+
+        $session = new Session();
+        $session->start();
+        $session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
+
+        return ['success' => true];
+
+    } catch (PDOException $e) {
+
+        error_log("PDO Exception: \n{$e}\n");
+        http_response_code(500);
+    }
+}

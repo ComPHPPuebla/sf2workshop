@@ -4,7 +4,7 @@ var $loginButton = $('#login');
 $('#login-form').on('submit', function(e) {
     e.preventDefault();
 
-    $.ajax('authenticate.php', {
+    $.ajax('/index.php/authenticate', {
         dataType: 'json',
         type: 'POST',
         data: $(this).serialize(),
@@ -22,7 +22,7 @@ $('#login-form').on('submit', function(e) {
             }
 
             if (response.success) {
-                window.location.href = 'books.php';
+                window.location.href = '/index.php/books';
             }
         }
     });
