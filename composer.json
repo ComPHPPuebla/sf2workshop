@@ -16,7 +16,8 @@
     },
     "autoload": {
         "psr-0": {
-            "BookShare": "src/"
+            "BookShare": "src/",
+            "Security": "src/"
         },
         "files": [
             "app/config/constants.php",
