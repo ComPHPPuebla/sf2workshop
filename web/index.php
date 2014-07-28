@@ -37,10 +37,18 @@ $downloadBook = new Route(
 
 $searchBooks = new Route('/books/search',['_controller' => 'search_books']);
 
+$login = new Route('/login', ['_controller' => 'login']);
+$logout = new Route('/logout', ['_controller' => 'logout']);
+$authenticate = new Route('/authenticate', ['_controller' => 'authenticate']);
+$authenticate->setMethods(['POST']);
+
 $routes->add('view-books', $viewBooks);
 $routes->add('view-book', $viewBook);
 $routes->add('download-book', $downloadBook);
 $routes->add('search-books',$searchBooks);
+$routes->add('login', $login);
+$routes->add('logout', $logout);
+$routes->add('authenticate', $authenticate);
 
 $context = new RequestContext();
 $context->fromRequest($request);
