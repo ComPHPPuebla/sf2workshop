@@ -21,7 +21,7 @@
         <default key="_controller">BookShareBundle\Controllers\ViewBooksController::viewBooksAction</default
     </route>
     <route id="save-book" path="/books/save" methods="POST">
-        <default key="_controller">save_book</default>
+        <default key="_controller">BookShareBundle\Controllers\SaveBookController::saveBookAction</default>
     </route>
 
     <route id="login" path="/login">
