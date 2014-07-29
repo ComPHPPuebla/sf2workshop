@@ -13,37 +13,27 @@ use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
 use Framework\ErrorController;
 
-require '../vendor/autoload.php';
+chdir(__DIR__ . '/../');
+
+require 'vendor/autoload.php';
 
 function render_response($template, array $parameters = [])
 {
     ob_start();
     extract($parameters, EXTR_SKIP);
-    require "../src/BookShareBundle/Resources/views/Book/$template";
+    require "src/BookShareBundle/Resources/views/Book/$template";
 
     return new Response(ob_get_clean());
 }
 
 $request = Request::createFromGlobals();
 
-$locator = new FileLocator(['../src/BookShareBundle/Resources/config']);
+$container = require 'app/config/container.php';
+$container->set('request', $request);
 
-$context = new RequestContext();
-$context->fromRequest($request);
+$kernel = $container->get('kernel');
 
-$router = new Router(
-    new XmlFileLoader($locator),
-    'routing.xml',
-    ['cache_dir' => '../app/cache', 'debug' => true],
-    $context
-);
-
-$dispatcher = new EventDispatcher();
-$dispatcher->addSubscriber(new RouterListener($router->getMatcher()));
-$dispatcher->addSubscriber(new ExceptionListener(new ErrorController()));
-
-$resolver = new ControllerResolver();
-$kernel = new HttpKernel($dispatcher, $resolver);
 $response = $kernel->handle($request);
 $response->send();
+
 $kernel->terminate($request, $response);

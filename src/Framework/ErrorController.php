@@ -16,6 +16,7 @@ class ErrorController
         }
         $response = new Response('Something went terribly wrong.');
         $response->setStatusCode(500);
+        $response->setContent(var_export($exception->getMessage(), true));
 
         return $response;
     }
