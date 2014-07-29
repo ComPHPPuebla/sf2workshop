@@ -18,7 +18,7 @@
         <requirement key="bookId">\d+</requirement>
     </route>
     <route id="share-book" path="/books/share">
-        <default key="_controller">share_book</default>
+        <default key="_controller">BookShareBundle\Controllers\ViewBooksController::viewBooksAction</default
     </route>
     <route id="save-book" path="/books/save" methods="POST">
         <default key="_controller">BookShareBundle\Controllers\SaveBookController::saveBookAction</default>
