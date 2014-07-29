@@ -25,8 +25,7 @@
         "files": [
             "app/config/constants.php",
             "app/functions/db.php",
-            "app/functions/session.php",
-            "app/functions/books.php"
+            "app/functions/session.php"
         ]
     },
     "config": {

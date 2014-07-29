@@ -15,15 +15,6 @@ use Framework\ErrorController;
 
 require '../vendor/autoload.php';
 
-function render_response($template, array $parameters = [])
-{
-    ob_start();
-    extract($parameters, EXTR_SKIP);
-    require "../src/BookShareBundle/Resources/views/Book/$template";
-
-    return new Response(ob_get_clean());
-}
-
 $request = Request::createFromGlobals();
 
 $locator = new FileLocator(['../src/BookShareBundle/Resources/config']);
