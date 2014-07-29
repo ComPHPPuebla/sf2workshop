@@ -7,6 +7,11 @@ use Symfony\Component\Routing\Loader\XmlFileLoader;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\EventListener\RouterListener;
+use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
+use Framework\ErrorController;
 
 require '../vendor/autoload.php';
 
@@ -33,23 +38,12 @@ $router = new Router(
     $context
 );
 
-try {
-    $parameters = $router->match($request->getPathInfo());
-    $request->attributes->add($parameters);
+$dispatcher = new EventDispatcher();
+$dispatcher->addSubscriber(new RouterListener($router->getMatcher()));
+$dispatcher->addSubscriber(new ExceptionListener(new ErrorController()));
 
-    $resolver = new ControllerResolver();
-    $controller = $resolver->getController($request);
-    $arguments = $resolver->getArguments($request, $controller);
-
-    $response = call_user_func_array($controller, $arguments);
-
-} catch (ResourceNotFoundException $exception) {
-    $response = new Response('The page you are looking for does not exist.');
-    $response->setStatusCode(404);
-} catch (Exception $exception) {
-    $response = new Response('Something went terribly wrong.');
-    $response->setStatusCode(500);
-} finally {
-    $response->prepare($request);
-    $response->send();
-}
+$resolver = new ControllerResolver();
+$kernel = new HttpKernel($dispatcher, $resolver);
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);
