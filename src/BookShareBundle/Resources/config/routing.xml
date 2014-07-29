@@ -7,31 +7,31 @@
         <default key="_controller">BookShareBundle\Controllers\ViewBooksController::viewBooksAction</default>
     </route>
     <route id="view-book" path="/books/{bookId}">
-        <default key="_controller">view_book</default>
+        <default key="_controller">BookShareBundle\Controllers\ViewBookController::viewBookAction</default>
         <requirement key="bookId">\d+</requirement>
     </route>
     <route id="search-books" path="/books/search">
-        <default key="_controller">search_books</default>
+        <default key="_controller">BookShareBundle\Controllers\SearchBooksController::searchBooksAction</default>
     </route>
     <route id="download-book" path="/books/download/{bookId}">
-        <default key="_controller">download_book</default>
+        <default key="_controller">BookShareBundle\Controllers\DownloadBookController::downloadBookAction</default>
         <requirement key="bookId">\d+</requirement>
     </route>
     <route id="share-book" path="/books/share">
-        <default key="_controller">BookShareBundle\Controllers\ViewBooksController::viewBooksAction</default
+        <default key="_controller">BookShareBundle\Controllers\ShareBookController::shareBookAction</default>
     </route>
     <route id="save-book" path="/books/save" methods="POST">
         <default key="_controller">BookShareBundle\Controllers\SaveBookController::saveBookAction</default>
     </route>
 
     <route id="login" path="/login">
-        <default key="_controller">login</default>
+        <default key="_controller">BookShareBundle\Controllers\LoginController::loginAction</default>
     </route>
     <route id="authenticate" path="/authenticate" methods="POST">
-        <default key="_controller">authenticate</default>
+        <default key="_controller">BookShareBundle\Controllers\AuthenticateController::authenticateAction</default>
     </route>
     <route id="logout" path="/logout">
-        <default key="_controller">logout</default>
+        <default key="_controller">BookShareBundle\Controllers\LogoutController::logoutAction</default>
     </route>
 
 </routes>

@@ -8,15 +8,13 @@ class ShareBookController
 {
     use Controller;
 
-    public function shareBooksAction()
+    public function shareBookAction()
     {
         is_user_logged();
+
         $allBooks = new AllBooks(db_connect());
-	    $allBooks = $allBooks->AllAuthors();
-        
+	    $allBooks = $allBooks->allAuthors();
 
         return $this->renderResponse('share-book.phtml', ['authors' => $allBooks]);
     }
 }
-class 
-

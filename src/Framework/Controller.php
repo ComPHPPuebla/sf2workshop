@@ -2,6 +2,7 @@
 namespace Framework;
 
 use Symfony\Component\HttpFoundation\Response;
+
 trait Controller
 {
     public function getView()
@@ -9,7 +10,7 @@ trait Controller
         return new View(['../src/BookShareBundle/Resources/views/Book']);
     }
 
-    public function renderResponse($template, $parameters)
+    public function renderResponse($template, $parameters = [])
     {
         $html = $this->getView()->render($template, $parameters);
 
