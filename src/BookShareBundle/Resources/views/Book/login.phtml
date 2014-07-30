@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
-    <head><?php include '../app/theme/header.phtml' ?></head>
+    <head><?php include 'app/theme/header.phtml' ?></head>
     <body>
         <article class="container">
-            <?php include '../app/theme/branding.phtml' ?>
+            <?php include 'app/theme/branding.phtml' ?>
             <h2>Sign in</h2>
-            <form method="post" action="index.php/authenticate" id="login-form">
+            <form method="post" action="/index.php/authenticate" id="login-form">
                 <p class="errors"></p>
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -18,7 +18,7 @@
                 <input type="submit" name="login" id="login" value="Login" class="btn btn-default">
             </form>
         </article>
-        <?php include '../app/theme/scripts.phtml' ?>
+        <?php include 'app/theme/scripts.phtml' ?>
         <script src="/assets/scripts/login.js"></script>
     </body>
 </html>

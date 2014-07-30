@@ -7,7 +7,7 @@ trait Controller
 {
     public function getView()
     {
-        return new View(['../src/BookShareBundle/Resources/views/Book']);
+        return new View(['src/BookShareBundle/Resources/views/Book']);
     }
 
     public function renderResponse($template, $parameters = [])

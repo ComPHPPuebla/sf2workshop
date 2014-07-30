@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <head><?php include '../app/theme/header.phtml' ?></head>
+    <head><?php include 'app/theme/header.phtml' ?></head>
     <body>
         <article class="container">
-            <?php include '../app/theme/navigation.phtml' ?>
-            <?php include '../app/theme/branding.phtml' ?>
+            <?php include 'app/theme/navigation.phtml' ?>
+            <?php include 'app/theme/branding.phtml' ?>
             <h2>Share a book</h2>
             <form action="/index.php/books/save" method="post" enctype="multipart/form-data">
                 <div class="form-group">
@@ -28,6 +28,6 @@
                 <input type="submit" name="submit" value="Submit" class="btn btn-default">
             </form>
         </article>
-        <?php include '../app/theme/scripts.phtml' ?>
+        <?php include 'app/theme/scripts.phtml' ?>
     </body>
 </html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="routes.file_path" type="collection">
+            <parameter>src/BookShareBundle/Resources/config</parameter>
+        </parameter>
+        <parameter key="routes.filename">routing.xml</parameter>
+        <parameter key="routes.router_options" type="collection">
+            <parameter key="cache_dir">app/cache</parameter>
+            <parameter key="debug">true</parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+        <service id="request" synthetic="true" />
+        <service id="routes_file_locator" class="Symfony\Component\Config\FileLocator">
+            <argument>%routes.file_path%</argument>
+        </service>
+        <service id="routes_request_context" class="Symfony\Component\Routing\RequestContext">
+            <call method="fromRequest">
+                <argument type="service" id="request" />
+            </call>
+        </service>
+        <service id="routes_loader" class="Symfony\Component\Routing\Loader\XmlFileLoader">
+            <argument type="service" id="routes_file_locator" />
+        </service>
+        <service id="routes_router" class="Symfony\Component\Routing\Router">
+            <argument type="service" id="routes_loader" />
+            <argument>%routes.filename%</argument>
+            <argument>%routes.router_options%</argument>
+            <argument type="service" id="routes_request_context" />
+        </service>
+        <service id="kernel_router_listener" class="Symfony\Component\HttpKernel\EventListener\RouterListener">
+            <argument type="expression">service('routes_router').getMatcher()</argument>
+        </service>
+        <service id="kernel_error_controller" class="Framework\ErrorController" />
+        <service id="kernel_exception_listener" class="Symfony\Component\HttpKernel\EventListener\ExceptionListener">
+            <argument type="service" id="kernel_error_controller" />
+        </service>
+        <service id="kernel_dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher">
+            <call method="addSubscriber">
+                <argument type="service" id="kernel_router_listener" />
+            </call>
+            <call method="addSubscriber">
+                <argument type="service" id="kernel_exception_listener" />
+            </call>
+        </service>
+        <service id="kernel_controller_resolver" class="Symfony\Component\HttpKernel\Controller\ControllerResolver" />
+        <service id="kernel" class="Symfony\Component\HttpKernel\HttpKernel">
+            <argument type="service" id="kernel_dispatcher" />
+            <argument type="service" id="kernel_controller_resolver" />
+        </service>
+    </services>
+
+</container>
