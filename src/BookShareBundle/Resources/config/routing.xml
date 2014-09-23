@@ -25,10 +25,10 @@
     </route>
 
     <route id="login" path="/login">
-        <default key="_controller">BookShareBundle\Controllers\LoginController::loginAction</default>
+        <default key="_controller">controller.login:loginAction</default>
     </route>
     <route id="authenticate" path="/authenticate" methods="POST">
-        <default key="_controller">BookShareBundle\Controllers\AuthenticateController::authenticateAction</default>
+        <default key="_controller">controller.authenticate:authenticateAction</default>
     </route>
     <route id="logout" path="/logout">
         <default key="_controller">BookShareBundle\Controllers\LogoutController::logoutAction</default>

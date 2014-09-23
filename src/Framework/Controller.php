@@ -5,14 +5,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait Controller
 {
-    public function getView()
+    /** @var View */
+    protected $view;
+
+    /**
+     * @param View $view
+     */
+    public function setView(View $view)
     {
-        return new View(['src/BookShareBundle/Resources/views/Book']);
+        $this->view = $view;
     }
 
+    /**
+     * @param  string   $template
+     * @param  array    $parameters
+     * @return Response
+     */
     public function renderResponse($template, $parameters = [])
     {
-        $html = $this->getView()->render($template, $parameters);
+        $html = $this->view->render($template, $parameters);
 
         return new Response($html);
     }
