@@ -71,7 +71,12 @@
 		<service id="controller.download_Book" class="BookShareBundle\Controllers\DownloadBookController">
             <argument type="service" id="repository.all_books" />
         </service>		
-		
+        <service id="controller.view_Book" class="BookShareBundle\Controllers\ViewBookController">
+            <argument type="service" id="repository.all_books" />
+            <call method="setView">
+                <argument type="service" id="view" />
+            </call>
+        </service>		
 		
     </services>
 

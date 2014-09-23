@@ -7,7 +7,7 @@
         <default key="_controller">controller.view_books:viewBooksAction</default>
     </route>
     <route id="view-book" path="/books/{bookId}">
-        <default key="_controller">BookShareBundle\Controllers\ViewBookController::viewBookAction</default>
+        <default key="_controller">controller.view_Book:viewBookAction</default>
         <requirement key="bookId">\d+</requirement>
     </route>
     <route id="search-books" path="/books/search">
