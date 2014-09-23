@@ -4,14 +4,14 @@
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="view-books" path="/books">
-        <default key="_controller">BookShareBundle\Controllers\ViewBooksController::viewBooksAction</default>
+        <default key="_controller">controller.view_books:viewBooksAction</default>
     </route>
     <route id="view-book" path="/books/{bookId}">
         <default key="_controller">BookShareBundle\Controllers\ViewBookController::viewBookAction</default>
         <requirement key="bookId">\d+</requirement>
     </route>
     <route id="search-books" path="/books/search">
-        <default key="_controller">BookShareBundle\Controllers\SearchBooksController::searchBooksAction</default>
+        <default key="_controller">controller.search_books:searchBooksAction</default>
     </route>
     <route id="download-book" path="/books/download/{bookId}">
         <default key="_controller">BookShareBundle\Controllers\DownloadBookController::downloadBookAction</default>
