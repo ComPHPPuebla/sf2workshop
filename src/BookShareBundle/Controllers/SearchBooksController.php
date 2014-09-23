@@ -8,6 +8,13 @@ use BookShare\Persistence\Pdo\AllBooks;
 class SearchBooksController
 {
     use Controller;
+	
+	protected $allBooks;
+	
+	public function __construct(AllBooks $allBooks)
+    {
+        $this->allBooks = $allBooks;
+    }
 
     public function searchBooksAction(Request $request)
     {
@@ -17,12 +24,10 @@ class SearchBooksController
         $searchType = $request->request->filter('search-type');
         $searchTerm = $request->request->filter('book-search');
 
-        $allBooks = new AllBooks(db_connect());
-
         if ('title' === $searchType) {
-            $books = $allBooks->ofTitleLike($searchTerm);
+            $books = $this->allBooks->ofTitleLike($searchTerm);
         } else {
-            $books = $allBooks->ofAuthorNameLike($searchTerm);
+            $books = $this->allBooks->ofAuthorNameLike($searchTerm);
         }
 
         return $this->renderResponse('search-books.phtml', ['books' => $books]);
