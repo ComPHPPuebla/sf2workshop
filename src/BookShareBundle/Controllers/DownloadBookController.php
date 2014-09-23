@@ -9,19 +9,23 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class DownloadBookController
 {
     use Controller;
-
+	protected $allBooks;
+	
+	public function __construct(AllBooks $allBooks)
+	{
+		$this->allBooks = $allBooks;
+	}
+		
     public function downloadBookAction($bookId)
     {
         is_user_logged();
-
-        $allBooks = new AllBooks(db_connect());
-
+				
         /*
          * add points to user
         */
-        $book = $allBooks->ofBookId($bookId);
+        $book = $this->allBooks->ofBookId($bookId);
 
-        $response = new BinaryFileResponse("../uploads/{$book['filename']}");
+        $response = new BinaryFileResponse(getcwd()."/uploads/{$book['filename']}");
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $book['filename']
