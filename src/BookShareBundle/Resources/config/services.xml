@@ -14,6 +14,7 @@
         <parameter key="db.error_exception" type="constant">PDO::ERRMODE_EXCEPTION</parameter>
         <parameter key="db.fetch_mode" type="constant">PDO::ATTR_DEFAULT_FETCH_MODE</parameter>
         <parameter key="db.fetch_assoc" type="constant">PDO::FETCH_ASSOC</parameter>
+		
     </parameters>
 
     <services>
@@ -39,6 +40,9 @@
         <service id="repository.all_users" class="Security\Persistence\Pdo\AllUsers">
             <argument type="service" id="db.connection" />
         </service>
+		<service id="repository.all_books" class="BookShare\Persistence\Pdo\AllBooks">
+            <argument type="service" id="db.connection" />
+        </service>
         <service id="controller.login" class="BookShareBundle\Controllers\LoginController">
             <call method="setView">
                 <argument type="service" id="view" />
@@ -51,6 +55,18 @@
                 <argument type="service" id="view" />
             </call>
         </service>
+		<service id="controller.view_books" class="BookShareBundle\Controllers\ViewBooksController">
+            <argument type="service" id="repository.all_books" />
+             <call method="setView">
+                <argument type="service" id="view" />
+            </call>
+        </service>
+		<service id="controller.search_books" class="BookShareBundle\Controllers\SearchBooksController">
+            <argument type="service" id="repository.all_books" />
+             <call method="setView">
+                <argument type="service" id="view" />
+            </call>
+        </service>		
     </services>
 
 </container>
