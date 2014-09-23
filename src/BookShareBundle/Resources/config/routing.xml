@@ -14,7 +14,7 @@
         <default key="_controller">controller.search_books:searchBooksAction</default>
     </route>
     <route id="download-book" path="/books/download/{bookId}">
-        <default key="_controller">BookShareBundle\Controllers\DownloadBookController::downloadBookAction</default>
+        <default key="_controller">controller.download_Book:downloadBookAction</default>
         <requirement key="bookId">\d+</requirement>
     </route>
     <route id="share-book" path="/books/share">

@@ -8,8 +8,8 @@
             <parameter>src/BookShareBundle/Resources/views/Book</parameter>
         </parameter>
         <parameter key="db.dsn">mysql:host=localhost;dbname=bookshare</parameter>
-        <parameter key="db.user">bshare_user</parameter>
-        <parameter key="db.password">book_share_us3r</parameter>
+        <parameter key="db.user">root</parameter>
+        <parameter key="db.password"></parameter>
         <parameter key="db.error_mode" type="constant">PDO::ATTR_ERRMODE</parameter>
         <parameter key="db.error_exception" type="constant">PDO::ERRMODE_EXCEPTION</parameter>
         <parameter key="db.fetch_mode" type="constant">PDO::ATTR_DEFAULT_FETCH_MODE</parameter>
@@ -67,6 +67,12 @@
                 <argument type="service" id="view" />
             </call>
         </service>		
+
+		<service id="controller.download_Book" class="BookShareBundle\Controllers\DownloadBookController">
+            <argument type="service" id="repository.all_books" />
+        </service>		
+		
+		
     </services>
 
 </container>
