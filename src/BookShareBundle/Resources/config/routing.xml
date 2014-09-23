@@ -18,10 +18,10 @@
         <requirement key="bookId">\d+</requirement>
     </route>
     <route id="share-book" path="/books/share">
-        <default key="_controller">BookShareBundle\Controllers\ShareBookController::shareBookAction</default>
+        <default key="_controller">controller.share_Book:shareBookAction</default>
     </route>
     <route id="save-book" path="/books/save" methods="POST">
-        <default key="_controller">BookShareBundle\Controllers\SaveBookController::saveBookAction</default>
+        <default key="_controller">controller.save_book:saveBookAction</default>
     </route>
 
     <route id="login" path="/login">
@@ -31,7 +31,7 @@
         <default key="_controller">controller.authenticate:authenticateAction</default>
     </route>
     <route id="logout" path="/logout">
-        <default key="_controller">BookShareBundle\Controllers\LogoutController::logoutAction</default>
+        <default key="_controller">controller.logout:logoutAction</default>
     </route>
 
 </routes>

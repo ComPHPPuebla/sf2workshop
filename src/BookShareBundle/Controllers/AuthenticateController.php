@@ -41,14 +41,14 @@ class AuthenticateController
 
                 return $this->renderResponse('authenticate.phtml', [
                     'result' => ['error' => $invalidCredentialsMessage]
-                    ]);
+                ]);
             }
 
             if (!password_verify($password, $user['password'])) {
 
                 return $this->renderResponse('authenticate.phtml', [
                     'result' => ['error' => $invalidCredentialsMessage]
-                    ]);
+                ]);
             }
 
             $user['password'] = null;

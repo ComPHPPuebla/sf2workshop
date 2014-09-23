@@ -7,14 +7,18 @@ use Framework\Controller;
 class ShareBookController
 {
     use Controller;
+    protected $allBooks;
 
+    public function __construct(AllBooks $allBooks)
+    {
+        $this->allBooks = $allBooks;
+    }
     public function shareBookAction()
     {
         is_user_logged();
 
-        $allBooks = new AllBooks(db_connect());
-	    $allBooks = $allBooks->allAuthors();
+	    $allAuthors = $this->allBooks->allAuthors();
 
-        return $this->renderResponse('share-book.phtml', ['authors' => $allBooks]);
+        return $this->renderResponse('share-book.phtml', ['authors' => $allAuthors]);
     }
 }
