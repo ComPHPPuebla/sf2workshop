@@ -7,14 +7,18 @@ use BookShare\Persistence\Pdo\AllBooks;
 class ViewBookController
 {
     use Controller;
+	protected $allBooks;
+	public function __construct(AllBooks $allbooks)
+	{
+	   $this->allBooks = $allbooks;
+	   
+	}
 
     public function viewBookAction($bookId)
     {
         is_user_logged();
 
-        $allBooks = new AllBooks(db_connect());
-
-        return $this->renderResponse('view-book.phtml', ['book' => $allBooks->ofBookId($bookId)]);
+        return $this->renderResponse('view-book.phtml', ['book' => $this->allBooks->ofBookId($bookId)]);
 
     }
 }
