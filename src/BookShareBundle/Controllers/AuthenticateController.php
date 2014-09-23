@@ -5,10 +5,20 @@ use Framework\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Security\Persistence\Pdo\AllUsers;
 use Symfony\Component\HttpFoundation\Session\Session;
+use PDOException;
 
 class AuthenticateController
 {
     use Controller;
+
+    protected $allUsers;
+    protected $session;
+
+    public function __construct(AllUsers $allUsers, Session $session)
+    {
+        $this->allUsers = $allUsers;
+        $this->session = $session;
+    }
 
     public function authenticateAction(Request $request)
     {
@@ -24,8 +34,7 @@ class AuthenticateController
 
         try {
 
-            $allUsers = new AllUsers(db_connect());
-            $user = $allUsers->ofUsername($username);
+            $user = $this->allUsers->ofUsername($username);
 
             $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
             if (!$user) {
@@ -44,9 +53,7 @@ class AuthenticateController
 
             $user['password'] = null;
 
-            $session = new Session();
-            $session->start();
-            $session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
+            $this->session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
 
             return $this->renderResponse('authenticate.phtml', ['result' => ['success' => true]]);
 

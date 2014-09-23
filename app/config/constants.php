@@ -1,7 +1,4 @@
 <?php
-define('DB_DSN', 'mysql:host=localhost;dbname=bookshare');
-define('DB_USER', 'bshare_user');
-define('DB_PASSWORD', 'book_share_us3r');
 define('APP_SHOW_ERRORS', true);
 define('APP_SESSION_NAMESPACE', 'bookshare');
 define('APP_POINTS_SHARE_BOOK', 15);
