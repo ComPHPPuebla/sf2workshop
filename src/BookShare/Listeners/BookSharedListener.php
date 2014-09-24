@@ -23,7 +23,7 @@ class BookSharedListener
     public function updateReaderPoints(BookSharedEvent $event)
     {
         $reader = $this->allReaders->ofUsername($event->getUsername());
-        $reader->addPoints(15);
+        $reader->addPoints($event->getPoints());
         $this->allReaders->update($reader);
     }
 

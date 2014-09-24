@@ -42,7 +42,7 @@ class SaveBookController
 
         $this->dispatcher->dispatch(
             BooksEvents::BOOK_SHARED,
-            new BookSharedEvent(get_user_information('username'))
+            new BookSharedEvent(get_user_information('username'),15)
         );
 
 		return new RedirectResponse('/index.php/books');

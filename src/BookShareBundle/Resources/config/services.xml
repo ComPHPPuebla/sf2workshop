@@ -15,6 +15,7 @@
         <parameter key="db.fetch_mode" type="constant">PDO::ATTR_DEFAULT_FETCH_MODE</parameter>
         <parameter key="db.fetch_assoc" type="constant">PDO::FETCH_ASSOC</parameter>
 		<parameter key="books.book_shared" type="constant">BookShare\BooksEvents::BOOK_SHARED</parameter>
+        <parameter key="books.book_downloaded" type="constant">BookShare\BooksEvents::BOOK_DOWNLOADED</parameter>
     </parameters>
 
     <services>
@@ -77,6 +78,13 @@
 
 		<service id="controller.download_Book" class="BookShareBundle\Controllers\DownloadBookController">
             <argument type="service" id="repository.all_books" />
+            <call method="setDispatcher">
+                <argument type="service" id="events.dispatcher" />
+            </call>
+            <call method="addListener">
+                <argument>%books.book_downloaded%</argument>
+                <argument type="service" id="listener.book_shared" />
+            </call>
         </service>		
         <service id="controller.view_Book" class="BookShareBundle\Controllers\ViewBookController">
             <argument type="service" id="repository.all_books" />
