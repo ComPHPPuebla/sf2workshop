@@ -21,13 +21,10 @@
     },
     "autoload": {
         "psr-0": {
-            "BookShare": "src/",
-            "Security": "src/",
-            "Framework": "src/"
+            "": "src/"
         },
         "files": [
             "app/config/constants.php",
-            "app/functions/db.php",
             "app/functions/session.php"
         ]
     },

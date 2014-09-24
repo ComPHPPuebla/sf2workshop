@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="templates.path" type="collection">
+            <parameter>src/BookShareBundle/Resources/views/Book</parameter>
+            <parameter>src/SecurityBundle/Resources/views/User</parameter>
+        </parameter>
+        <parameter key="db.dsn">mysql:host=localhost;dbname=bookshare</parameter>
+        <parameter key="db.user">bshare_user</parameter>
+        <parameter key="db.password">book_share_us3r</parameter>
+    </parameters>
+
+</container>

@@ -4,42 +4,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="templates.path" type="collection">
-            <parameter>src/BookShareBundle/Resources/views/Book</parameter>
-            <parameter>src/SecurityBundle/Resources/views/User</parameter>
-        </parameter>
-        <parameter key="db.dsn">mysql:host=localhost;dbname=bookshare</parameter>
-        <parameter key="db.user">bshare_user</parameter>
-        <parameter key="db.password">book_share_us3r</parameter>
-        <parameter key="db.error_mode" type="constant">PDO::ATTR_ERRMODE</parameter>
-        <parameter key="db.error_exception" type="constant">PDO::ERRMODE_EXCEPTION</parameter>
-        <parameter key="db.fetch_mode" type="constant">PDO::ATTR_DEFAULT_FETCH_MODE</parameter>
-        <parameter key="db.fetch_assoc" type="constant">PDO::FETCH_ASSOC</parameter>
 		<parameter key="books.book_shared" type="constant">BookShare\BooksEvents::BOOK_SHARED</parameter>
         <parameter key="books.book_downloaded" type="constant">BookShare\BooksEvents::BOOK_DOWNLOADED</parameter>
     </parameters>
 
     <services>
-        <service id="view" class="Framework\View">
-            <argument>%templates.path%</argument>
-        </service>
-        <service id="db.connection" class="PDO">
-            <argument>%db.dsn%</argument>
-            <argument>%db.user%</argument>
-            <argument>%db.password%</argument>
-            <call method="setAttribute">
-                <argument>%db.error_mode%</argument>
-                <argument>%db.error_exception%</argument>
-            </call>
-            <call method="setAttribute">
-                <argument>%db.fetch_mode%</argument>
-                <argument>%db.fetch_assoc%</argument>
-            </call>
-        </service>
-        <service id="session" class="Symfony\Component\HttpFoundation\Session\Session">
-            <call method="start" />
-        </service>
-        <service id="events.dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher" />
 		<service id="repository.all_books" class="BookShare\Persistence\Pdo\AllBooks">
             <argument type="service" id="db.connection" />
         </service>

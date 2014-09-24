@@ -5,6 +5,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use BookShareBundle\DependencyInjection\BookShareBundleExtension;
 use SecurityBundle\DependencyInjection\SecurityBundleExtension;
+use Framework\DependencyInjection\FrameworkExtension;
 
 $containerPath = 'app/cache/ProjectServiceContainer.php';
 
@@ -16,9 +17,12 @@ if (!file_exists($containerPath)) {
     $extension = new SecurityBundleExtension();
     $builder->registerExtension($extension);
     $builder->loadFromExtension($extension->getNamespace());
+    $extension = new FrameworkExtension();
+    $builder->registerExtension($extension);
+    $builder->loadFromExtension($extension->getNamespace());
 
-    $loader = new XmlFileLoader($builder, new FileLocator('src/Framework/Resources/config'));
-    $loader->load('services.xml');
+    $loader = new XmlFileLoader($builder, new FileLocator('app/config'));
+    $loader->load('parameters.xml');
 
     $builder->compile();
     $dumper = new PhpDumper($builder);
