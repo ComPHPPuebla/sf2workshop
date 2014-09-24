@@ -2,7 +2,7 @@
 namespace BookShareBundle\Controllers;
 
 use BookShare\BooksEvents;
-use BookShare\BookSharedEvent;
+use BookShare\ReaderPointsUpdateEvent;
 use BookShare\Persistence\Pdo\AllBooks;
 use Framework\Controller;
 use Framework\Events\ProvidesEvents;
@@ -42,7 +42,7 @@ class SaveBookController
 
         $this->dispatcher->dispatch(
             BooksEvents::BOOK_SHARED,
-            new BookSharedEvent(get_user_information('username'),15)
+            new ReaderPointsUpdateEvent(get_user_information('username'), 15)
         );
 
 		return new RedirectResponse('/index.php/books');

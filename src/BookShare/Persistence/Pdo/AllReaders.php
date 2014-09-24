@@ -28,7 +28,7 @@ class AllReaders implements AllReadersInterface
 
     public function update(Reader $reader)
     {
-        $sql = 'UPDATE user SET points = points + ? WHERE username = ?';
+        $sql = 'UPDATE user SET points = ? WHERE username = ?';
         $statement = $this->connection->prepare($sql);
         $statement->execute([$reader->points(), $reader->username()]);
     }

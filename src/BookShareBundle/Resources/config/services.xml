@@ -15,7 +15,7 @@
         <service id="repository.all_readers" class="BookShare\Persistence\Pdo\AllReaders">
             <argument type="service" id="db.connection" />
         </service>
-        <service id="listener.book_shared" class="BookShare\Listeners\BookSharedListener">
+        <service id="listener.update_reader_points" class="BookShare\Listeners\UpdateReaderPoints">
             <argument type="service" id="repository.all_readers" />
         </service>
 		<service id="controller.view_books" class="BookShareBundle\Controllers\ViewBooksController">
@@ -38,7 +38,7 @@
             </call>
             <call method="addListener">
                 <argument>%books.book_downloaded%</argument>
-                <argument type="service" id="listener.book_shared" />
+                <argument type="service" id="listener.update_reader_points" />
             </call>
         </service>		
         <service id="controller.view_Book" class="BookShareBundle\Controllers\ViewBookController">
@@ -60,7 +60,7 @@
             </call>
             <call method="addListener">
                 <argument>%books.book_shared%</argument>
-                <argument type="service" id="listener.book_shared" />
+                <argument type="service" id="listener.update_reader_points" />
             </call>
         </service>
     </services>

@@ -1,10 +1,10 @@
 <?php
 namespace BookShare\Listeners;
 
-use BookShare\BookSharedEvent;
+use BookShare\ReaderPointsUpdateEvent;
 use BookShare\AllReaders;
 
-class BookSharedListener
+class UpdateReaderPoints
 {
     /** @var AllReaders */
     protected $allReaders;
@@ -18,9 +18,9 @@ class BookSharedListener
     }
 
     /**
-     * @param BookSharedEvent $event
+     * @param ReaderPointsUpdateEvent $event
      */
-    public function updateReaderPoints(BookSharedEvent $event)
+    public function updateReaderPoints(ReaderPointsUpdateEvent $event)
     {
         $reader = $this->allReaders->ofUsername($event->getUsername());
         $reader->addPoints($event->getPoints());
@@ -28,9 +28,9 @@ class BookSharedListener
     }
 
     /**
-     * @param BookSharedEvent $event
+     * @param ReaderPointsUpdateEvent $event
      */
-    public function __invoke(BookSharedEvent $event)
+    public function __invoke(ReaderPointsUpdateEvent $event)
     {
         $this->updateReaderPoints($event);
     }

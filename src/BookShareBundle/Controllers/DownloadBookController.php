@@ -6,7 +6,7 @@ use BookShare\Persistence\Pdo\AllBooks;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Framework\Events\ProvidesEvents;
-use BookShare\BooksEvents;use BookShare\BookSharedEvent;
+use BookShare\BooksEvents;use BookShare\ReaderPointsUpdateEvent;
 
 class DownloadBookController
 {
@@ -22,13 +22,10 @@ class DownloadBookController
     public function downloadBookAction($bookId)
     {
         is_user_logged();
-				
-        /*
-         * add points to user
-        */
+
         $book = $this->allBooks->ofBookId($bookId);
 
-        $response = new BinaryFileResponse(getcwd()."/uploads/{$book['filename']}");
+        $response = new BinaryFileResponse("/uploads/{$book['filename']}");
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $book['filename']
@@ -37,7 +34,7 @@ class DownloadBookController
         $response->headers->set('Content-Disposition', $disposition);
         $this->dispatcher->dispatch(
             BooksEvents::BOOK_DOWNLOADED,
-            new BookSharedEvent(get_user_information('username'),-2)
+            new ReaderPointsUpdateEvent(get_user_information('username'), -2)
         );
         return $response;
     }
