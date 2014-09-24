@@ -1,29 +1,35 @@
 <?php
 namespace BookShareBundle\Controllers;
 
+use BookShare\BooksEvents;
+use BookShare\BookSharedEvent;
 use BookShare\Persistence\Pdo\AllBooks;
 use Framework\Controller;
+use Framework\Events\ProvidesEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use BookShare\Book;
 use BookShare\Author;
-use PDO;
 
 class SaveBookController
 {
-    use Controller;
+    use Controller, ProvidesEvents;
 
+    /** @var AllBooks */
     protected $allBooks;
-    protected $connection;
 
-    public  function __construct(
-        AllBooks $allBooks, PDO $connection
-    )
+    /**
+     * @param AllBooks $allBooks
+     */
+    public  function __construct(AllBooks $allBooks)
     {
         $this->allBooks = $allBooks;
-        $this->connection = $connection;
     }
 
+    /**
+     * @param  Request          $request
+     * @return RedirectResponse
+     */
     public function saveBookAction(Request $request)
     {
 		$title = $request->request->filter('title');
@@ -34,10 +40,11 @@ class SaveBookController
 
 		$this->allBooks->add(new Book($title, $filename, new Author($authorId)));
 
-		$sql = 'UPDATE user SET points = points + ? WHERE username = ?';
-		query($this->connection, $sql, [APP_POINTS_SHARE_BOOK, get_user_information('username')]);
+        $this->dispatcher->dispatch(
+            BooksEvents::BOOK_SHARED,
+            new BookSharedEvent(get_user_information('username'))
+        );
 
 		return new RedirectResponse('/index.php/books');
     }
 }
-

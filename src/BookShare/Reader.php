@@ -12,6 +12,22 @@ class Reader
     /** @type string */
     protected $username;
 
+    public function __construct($username, $points = 0)
+    {
+        $this->username = $username;
+        $this->points = $points;
+    }
+
+    public function username()
+    {
+        return $this->username;
+    }
+
+    public function points()
+    {
+        return $this->points;
+    }
+
     /**
      * @param integer $points
      */
