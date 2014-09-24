@@ -1,17 +1,18 @@
 <?php
 namespace Framework;
 
+use Framework\View\TemplateEngine;
 use Symfony\Component\HttpFoundation\Response;
 
 trait Controller
 {
-    /** @var View */
+    /** @var TemplateEngine */
     protected $view;
 
     /**
-     * @param View $view
+     * @param TemplateEngine $view
      */
-    public function setView(View $view)
+    public function setView(TemplateEngine $view)
     {
         $this->view = $view;
     }
@@ -21,7 +22,7 @@ trait Controller
      * @param  array    $parameters
      * @return Response
      */
-    public function renderResponse($template, $parameters = [])
+    public function renderResponse($template, array $parameters = [])
     {
         $html = $this->view->render($template, $parameters);
 

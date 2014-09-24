@@ -5,6 +5,7 @@
 
     <parameters>
         <parameter key="templates.path" type="collection">
+            <parameter>app/theme</parameter>
             <parameter>src/BookShareBundle/Resources/views/Book</parameter>
             <parameter>src/SecurityBundle/Resources/views/User</parameter>
         </parameter>

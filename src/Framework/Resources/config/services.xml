@@ -16,11 +16,21 @@
             <parameter key="cache_dir">app/cache</parameter>
             <parameter key="debug">true</parameter>
         </parameter>
+        <parameter key="twig.env.options" type="collection">
+            <parameter key="cache">app/cache/twig</parameter>
+        </parameter>
     </parameters>
 
     <services>
-        <service id="view" class="Framework\View">
+        <service id="twig.loader" class="Twig_Loader_Filesystem">
             <argument>%templates.path%</argument>
+        </service>
+        <service id="twig.environment" class="Twig_Environment">
+            <argument type="service" id="twig.loader" />
+            <argument>%twig.env.options%</argument>
+        </service>
+        <service id="view" class="Framework\View\TwigEngine">
+            <argument type="service" id="twig.environment" />
         </service>
         <service id="db.connection" class="PDO">
             <argument>%db.dsn%</argument>

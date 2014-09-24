@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
-    <head><?php include 'app/theme/header.phtml' ?></head>
+    <head>{% include 'header.html.twig' %}</head>
     <body>
         <article class="container">
-            <?php include 'app/theme/branding.phtml' ?>
+            {% include 'branding.html.twig' %}
             <h2>Sign in</h2>
             <form method="post" action="/index.php/authenticate" id="login-form">
                 <p class="errors"></p>
@@ -18,7 +18,7 @@
                 <input type="submit" name="login" id="login" value="Login" class="btn btn-default">
             </form>
         </article>
-        <?php include 'app/theme/scripts.phtml' ?>
+        {% include 'scripts.html.twig' %}
         <script src="/assets/scripts/login.js"></script>
     </body>
 </html>

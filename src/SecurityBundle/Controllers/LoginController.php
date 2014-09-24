@@ -9,6 +9,6 @@ class LoginController
 
     public function loginAction()
     {
-        return $this->renderResponse('login.phtml');
+        return $this->renderResponse('login.html.twig');
     }
 }

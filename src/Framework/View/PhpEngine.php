@@ -1,20 +1,28 @@
 <?php
-namespace Framework;
+namespace Framework\View;
 
 use RuntimeException;
 
-class View
+class PhpEngine implements TemplateEngine
 {
     protected $paths;
     protected $templateFound;
 
+    /**
+     * @param array $paths
+     */
     public function __construct(array $paths)
     {
         $this->paths = $paths;
         $this->templateFound = false;
     }
 
-    public function render($template, $parameters)
+    /**
+     * @param  string $template
+     * @param  array  $parameters
+     * @return string
+     */
+    public function render($template, array $parameters = [])
     {
         ob_start();
         extract($parameters, EXTR_SKIP);
