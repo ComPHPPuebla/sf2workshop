@@ -19,6 +19,6 @@ class ShareBookController
 
 	    $allAuthors = $this->allBooks->allAuthors();
 
-        return $this->renderResponse('share-book.phtml', ['authors' => $allAuthors]);
+        return $this->renderResponse('share-book.html.twig', ['authors' => $allAuthors]);
     }
 }

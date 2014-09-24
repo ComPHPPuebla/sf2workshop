@@ -18,7 +18,7 @@ class ViewBookController
     {
         is_user_logged();
 
-        return $this->renderResponse('view-book.phtml', ['book' => $this->allBooks->ofBookId($bookId)]);
+        return $this->renderResponse('view-book.html.twig', ['book' => $this->allBooks->ofBookId($bookId)]);
 
     }
 }

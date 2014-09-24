@@ -1,9 +1,5 @@
-<!doctype html>
-<html>
-    <head>{% include 'header.html.twig' %}</head>
-    <body>
-        <article class="container">
-            {% include 'branding.html.twig' %}
+{% extends 'home.html.twig' %}
+{% block content %}
             <h2>Sign in</h2>
             <form method="post" action="/index.php/authenticate" id="login-form">
                 <p class="errors"></p>
@@ -17,8 +13,4 @@
                 </div>
                 <input type="submit" name="login" id="login" value="Login" class="btn btn-default">
             </form>
-        </article>
-        {% include 'scripts.html.twig' %}
-        <script src="/assets/scripts/login.js"></script>
-    </body>
-</html>
+{% endblock %}

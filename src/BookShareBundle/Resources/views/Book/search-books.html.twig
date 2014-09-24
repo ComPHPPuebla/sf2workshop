@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+    {% block content %}
+            <h2>Books results</h2>
+            <table class="table table-striped table-bordered table-hover">
+                <tr><th colspan="2">Title</th></tr>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book['title'] }}</td>
+                    <td>
+                        <a href="/index.php/books/{{ book['book_id'] }}">
+                            Read now
+                        </a>
+                    </td>
+                <tr>
+            {%  endfor %}
+            </table>
+    {% endblock %}

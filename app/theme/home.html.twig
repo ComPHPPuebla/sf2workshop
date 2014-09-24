@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>{% include 'header.html.twig' %}</head>
+<body>
+<article class="container">
+    {% include 'branding.html.twig' %}
+{% block content %}{% endblock %}
+</article>
+{% include 'scripts.html.twig' %}
+<script src="/assets/scripts/login.js"></script>
+</body>
+</html>

@@ -30,6 +30,6 @@ class SearchBooksController
             $books = $this->allBooks->ofAuthorNameLike($searchTerm);
         }
 
-        return $this->renderResponse('search-books.phtml', ['books' => $books]);
+        return $this->renderResponse('search-books.html.twig', ['books' => $books]);
     }
 }

@@ -17,6 +17,6 @@ class ViewBooksController
     {
         is_user_logged();
 
-            return $this->renderResponse('view-books.phtml', ['books' => $this->allBooks->withBestRate()]);
+            return $this->renderResponse('view-books.html.twig', ['books' => $this->allBooks->withBestRate()]);
     }
 }

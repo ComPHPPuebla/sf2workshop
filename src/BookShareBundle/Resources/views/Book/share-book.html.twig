@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head><?php include 'app/theme/header.phtml' ?></head>
-    <body>
-        <article class="container">
-            <?php include 'app/theme/navigation.phtml' ?>
-            <?php include 'app/theme/branding.phtml' ?>
+{% extends "base.html.twig" %}
+{% block content %}
             <h2>Share a book</h2>
             <form action="/index.php/books/save" method="post" enctype="multipart/form-data">
                 <div class="form-group">
@@ -14,11 +9,11 @@
                 <div class="form-group">
                     <label for="author">Author</label>
                     <select name="author-id" class="form-control">
-                        <?php foreach ($authors as $author) : ?>
-                            <option value="<?php echo $author['author_id'] ?>">
-                                <?php echo $author['name'] ?>
+                        {% for author in authors %}
+                            <option value="{{ author['author_id'] }}">
+                                {{ author['name'] }}
                             </option>
-                        <?php endforeach ?>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
@@ -27,7 +22,4 @@
                 </div>
                 <input type="submit" name="submit" value="Submit" class="btn btn-default">
             </form>
-        </article>
-        <?php include 'app/theme/scripts.phtml' ?>
-    </body>
-</html>
+        {% endblock %}

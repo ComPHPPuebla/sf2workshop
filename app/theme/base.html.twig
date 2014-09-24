@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>{%include 'header.html.twig'%}</head>
+<body>
+<article class="container">
+    {%include 'navigation.html.twig'%}
+    {%include 'branding.html.twig'%}
+    {% block content %}{% endblock %}
+</article>
+{% include 'scripts.html.twig' %}
+</body>
+</html>
