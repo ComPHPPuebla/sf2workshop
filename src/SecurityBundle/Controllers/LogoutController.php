@@ -1,5 +1,5 @@
 <?php
-namespace BookShareBundle\Controllers;
+namespace SecurityBundle\Controllers;
 
 use Framework\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -9,13 +9,20 @@ class LogoutController
 {
     use Controller;
 
+    /** @var Session */
     protected $session;
 
+    /**
+     * @param Session $session
+     */
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
+    /**
+     * @return RedirectResponse
+     */
     public function logoutAction()
     {
         $this->session->clear();

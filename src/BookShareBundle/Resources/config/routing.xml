@@ -24,14 +24,4 @@
         <default key="_controller">controller.save_book:saveBookAction</default>
     </route>
 
-    <route id="login" path="/login">
-        <default key="_controller">controller.login:loginAction</default>
-    </route>
-    <route id="authenticate" path="/authenticate" methods="POST">
-        <default key="_controller">controller.authenticate:authenticateAction</default>
-    </route>
-    <route id="logout" path="/logout">
-        <default key="_controller">controller.logout:logoutAction</default>
-    </route>
-
 </routes>

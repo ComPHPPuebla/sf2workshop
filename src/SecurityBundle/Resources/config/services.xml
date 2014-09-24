@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="repository.all_users" class="Security\Persistence\Pdo\AllUsers">
+            <argument type="service" id="db.connection" />
+        </service>
+        <service id="controller.login" class="SecurityBundle\Controllers\LoginController">
+            <call method="setView">
+                <argument type="service" id="view" />
+            </call>
+        </service>
+        <service id="controller.authenticate" class="SecurityBundle\Controllers\AuthenticateController">
+            <argument type="service" id="repository.all_users" />
+            <argument type="service" id="session" />
+        </service>
+        <service id="controller.logout" class="SecurityBundle\Controllers\LogoutController">
+            <argument type="service" id="session" />
+        </service>
+    </services>
+
+</container>

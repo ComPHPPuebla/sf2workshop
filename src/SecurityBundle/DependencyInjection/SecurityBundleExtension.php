@@ -1,12 +1,12 @@
 <?php
-namespace BookShareBundle\DependencyInjection;
+namespace SecurityBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class BookShareBundleExtension extends Extension
+class SecurityBundleExtension extends Extension
 {
     /**
      * @param array            $config

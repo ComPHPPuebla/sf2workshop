@@ -1,5 +1,5 @@
 <?php
-namespace BookShareBundle\Controllers;
+namespace SecurityBundle\Controllers;
 
 use Framework\Controller;
 

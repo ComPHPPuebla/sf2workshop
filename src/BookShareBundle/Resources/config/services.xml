@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
         <parameter key="templates.path" type="collection">
             <parameter>src/BookShareBundle/Resources/views/Book</parameter>
+            <parameter>src/SecurityBundle/Resources/views/User</parameter>
         </parameter>
         <parameter key="db.dsn">mysql:host=localhost;dbname=bookshare</parameter>
         <parameter key="db.user">bshare_user</parameter>
@@ -39,9 +40,6 @@
             <call method="start" />
         </service>
         <service id="events.dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher" />
-        <service id="repository.all_users" class="Security\Persistence\Pdo\AllUsers">
-            <argument type="service" id="db.connection" />
-        </service>
 		<service id="repository.all_books" class="BookShare\Persistence\Pdo\AllBooks">
             <argument type="service" id="db.connection" />
         </service>
@@ -50,18 +48,6 @@
         </service>
         <service id="listener.book_shared" class="BookShare\Listeners\BookSharedListener">
             <argument type="service" id="repository.all_readers" />
-        </service>
-        <service id="controller.login" class="BookShareBundle\Controllers\LoginController">
-            <call method="setView">
-                <argument type="service" id="view" />
-            </call>
-        </service>
-        <service id="controller.authenticate" class="BookShareBundle\Controllers\AuthenticateController">
-            <argument type="service" id="repository.all_users" />
-            <argument type="service" id="session" />
-            <call method="setView">
-                <argument type="service" id="view" />
-            </call>
         </service>
 		<service id="controller.view_books" class="BookShareBundle\Controllers\ViewBooksController">
             <argument type="service" id="repository.all_books" />
@@ -107,9 +93,6 @@
                 <argument>%books.book_shared%</argument>
                 <argument type="service" id="listener.book_shared" />
             </call>
-        </service>
-        <service id="controller.logout" class="BookShareBundle\Controllers\LogoutController">
-            <argument type="service" id="session" />
         </service>
     </services>
 

@@ -5,9 +5,9 @@
 
     <parameters>
         <parameter key="routes.file_path" type="collection">
-            <parameter>src/BookShareBundle/Resources/config</parameter>
+            <parameter>./</parameter>
         </parameter>
-        <parameter key="routes.filename">routing.xml</parameter>
+        <parameter key="routes.filename">app/config/routing.xml</parameter>
         <parameter key="routes.router_options" type="collection">
             <parameter key="cache_dir">app/cache</parameter>
             <parameter key="debug">true</parameter>
