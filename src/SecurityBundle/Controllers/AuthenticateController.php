@@ -35,7 +35,6 @@ class AuthenticateController
     public function authenticateAction(Request $request)
     {
         if (!$request->request->has('username') || !$request->request->has('password')) {
-
             return new JsonResponse(['error' => 'Enter your username and password.']);
         }
 
@@ -48,12 +47,10 @@ class AuthenticateController
 
             $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
             if (!$user) {
-
                 return new JsonResponse(['error' => $invalidCredentialsMessage]);
             }
 
             if (!password_verify($password, $user['password'])) {
-
                 return new JsonResponse(['error' => $invalidCredentialsMessage]);
             }
 

@@ -9,7 +9,7 @@ interface AllReaders
     public function update(Reader $reader);
 
     /**
-     * @param string $username
+     * @param  string $username
      * @return Reader
      */
     public function ofUsername($username);

@@ -19,7 +19,7 @@ class AllBooks implements AllBooksInterface
     }
 
     /**
-     * @param integer $bookId
+     * @param  integer $bookId
      * @return Book
      */
     public function ofBookId($bookId)
@@ -41,7 +41,7 @@ QUERY;
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return Books[]
      */
     public function ofTitleLike($title)
@@ -65,7 +65,7 @@ QUERY;
     }
 
     /**
-     * @param string $authorName
+     * @param  string  $authorName
      * @return Books[]
     */
     public function ofAuthorNameLike($authorName)
@@ -124,17 +124,17 @@ QUERY;
         return $statement->fetchAll();
     }
 
-	public function allAuthors()
-	{
-		$sql = <<<QUERY
-			SELECT
-				a.author_id,
-				a.name
-			 FROM author a
+    public function allAuthors()
+    {
+        $sql = <<<QUERY
+            SELECT
+                a.author_id,
+                a.name
+             FROM author a
 QUERY;
-		$statement = $this->connection->prepare($sql);
-		$statement->execute();
+        $statement = $this->connection->prepare($sql);
+        $statement->execute();
 
-		 return $statement->fetchAll();
-	}
+         return $statement->fetchAll();
+    }
 }

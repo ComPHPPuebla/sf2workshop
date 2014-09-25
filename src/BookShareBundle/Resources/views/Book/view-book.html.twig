@@ -1,17 +1,17 @@
 {% extends  'base.html.twig' %}
+
 {% block content %}
-            <h2>{{book['title']}}</h2>
-            <h3>By {{book['author']}}</h3>
-            <p>
-                <a href="view-book.php?file={{book['filename']}}"
-                   class="media" >
-                    {{book['title']}}
-                </a>
-            </p>
-            <p>
-                <a href="/index.php/books/download/{{book['book_id']}}">Download book</a>
-            </p>
+<h2>{{book['title']}}</h2>
+<h3>By {{book['author']}}</h3>
+<p>
+    <a href="view-book.php?file={{book['filename']}}" class="media" >
+        {{book['title']}}
+    </a>
+</p>
+<p>
+    <a href="/index.php/books/download/{{book['book_id']}}">Download book</a>
+</p>
 <script type="text/javascript" src="https://raw.githubusercontent.com/malsup/media/master/jquery.media.js"></script>
 <script type="text/javascript" src="https://raw.githubusercontent.com/jquery-orphans/jquery-metadata/master/jquery.metadata.js"></script>
 <script type="text/javascript" src="/assets/scripts/book.js"></script>
- {% endblock %}
+{% endblock %}

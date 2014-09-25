@@ -12,13 +12,13 @@ class DownloadBookController
 {
 
     use Controller, ProvidesEvents;
-	protected $allBooks;
-	
-	public function __construct(AllBooks $allBooks)
-	{
-		$this->allBooks = $allBooks;
-	}
-		
+    protected $allBooks;
+
+    public function __construct(AllBooks $allBooks)
+    {
+        $this->allBooks = $allBooks;
+    }
+
     public function downloadBookAction($bookId)
     {
         is_user_logged();
@@ -36,6 +36,7 @@ class DownloadBookController
             BooksEvents::BOOK_DOWNLOADED,
             new ReaderPointsUpdateEvent(get_user_information('username'), -2)
         );
+
         return $response;
     }
 }

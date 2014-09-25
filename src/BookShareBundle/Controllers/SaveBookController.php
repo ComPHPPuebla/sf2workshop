@@ -21,7 +21,7 @@ class SaveBookController
     /**
      * @param AllBooks $allBooks
      */
-    public  function __construct(AllBooks $allBooks)
+    public function __construct(AllBooks $allBooks)
     {
         $this->allBooks = $allBooks;
     }
@@ -32,19 +32,19 @@ class SaveBookController
      */
     public function saveBookAction(Request $request)
     {
-		$title = $request->request->filter('title');
-		$authorId = $request->request->filter('author-id');
-		$file = $request->files->get('file');
-		$filename = $file->getClientOriginalName();
-		$file->move('uploads/', $filename);
+        $title = $request->request->filter('title');
+        $authorId = $request->request->filter('author-id');
+        $file = $request->files->get('file');
+        $filename = $file->getClientOriginalName();
+        $file->move('uploads/', $filename);
 
-		$this->allBooks->add(new Book($title, $filename, new Author($authorId)));
+        $this->allBooks->add(new Book($title, $filename, new Author($authorId)));
 
         $this->dispatcher->dispatch(
             BooksEvents::BOOK_SHARED,
             new ReaderPointsUpdateEvent(get_user_information('username'), 15)
         );
 
-		return new RedirectResponse('/index.php/books');
+        return new RedirectResponse('/index.php/books');
     }
 }

@@ -4,19 +4,19 @@ namespace BookShare;
 interface AllBooks
 {
     /**
-     * @param integer $bookId
+     * @param  integer $bookId
      * @return Book
      */
     public function ofBookId($bookId);
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return Books[]
      */
     public function ofTitleLike($title);
 
     /**
-     * @param string $authorName
+     * @param  string  $authorName
      * @return Books[]
      */
     public function ofAuthorNameLike($authorName);

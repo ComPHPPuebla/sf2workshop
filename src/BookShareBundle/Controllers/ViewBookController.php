@@ -7,12 +7,12 @@ use BookShare\Persistence\Pdo\AllBooks;
 class ViewBookController
 {
     use Controller;
-	protected $allBooks;
-	public function __construct(AllBooks $allbooks)
-	{
-	   $this->allBooks = $allbooks;
-	   
-	}
+    protected $allBooks;
+    public function __construct(AllBooks $allbooks)
+    {
+       $this->allBooks = $allbooks;
+
+    }
 
     public function viewBookAction($bookId)
     {
