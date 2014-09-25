@@ -2,16 +2,11 @@
 
 {% block content %}
 <h2>Sign in</h2>
+
+{% form_theme form 'form-element.html.twig' %}
+
 <form method="post" action="/index.php/authenticate" id="login-form">
     <p class="errors"></p>
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" class="form-control">
-    </div>
-    <input type="submit" name="login" id="login" value="Login" class="btn btn-default">
+    {{ form_widget(form) }}
 </form>
 {% endblock %}

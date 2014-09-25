@@ -2,6 +2,8 @@
 namespace SecurityBundle\Controllers;
 
 use Framework\Controller;
+use SecurityBundle\Forms\Types\LoginFormType;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +21,19 @@ class AuthenticateController
     /** @var Session */
     protected $session;
 
+    /** @var FormFactory */
+    protected $formFactory;
+
     /**
-     * @param AllUsers $allUsers
-     * @param Session  $session
+     * @param AllUsers    $allUsers
+     * @param Session     $session
+     * @param FormFactory $formFactory
      */
-    public function __construct(AllUsers $allUsers, Session $session)
+    public function __construct(AllUsers $allUsers, Session $session, FormFactory $formFactory)
     {
         $this->allUsers = $allUsers;
         $this->session = $session;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -34,39 +41,25 @@ class AuthenticateController
      */
     public function authenticateAction(Request $request)
     {
-        if (!$request->request->has('username') || !$request->request->has('password')) {
-            return new JsonResponse(['error' => 'Enter your username and password.']);
-        }
+        $form = $this->formFactory->create(new LoginFormType());
+        $form->handleRequest($request);
 
-        $username = $request->request->filter('username', null, false, FILTER_SANITIZE_STRING);
-        $password = $request->request->filter('password', null, false, FILTER_SANITIZE_STRING);
+        $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
+        if ($form->isValid()) {
+            $credentials = $form->getData();
 
-        try {
+            $user = $this->allUsers->ofUsername($credentials['username']);
 
-            $user = $this->allUsers->ofUsername($username);
-
-            $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
-            if (!$user) {
-                return new JsonResponse(['error' => $invalidCredentialsMessage]);
-            }
-
-            if (!password_verify($password, $user['password'])) {
+            if (!$user || !password_verify($credentials['password'], $user['password'])) {
                 return new JsonResponse(['error' => $invalidCredentialsMessage]);
             }
 
             $user['password'] = null;
-
             $this->session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
 
             return new JsonResponse(['success' => true]);
-
-        } catch (PDOException $e) {
-
-            error_log("PDO Exception: \n{$e}\n");
-            $response = new Response();
-            $response->setStatusCode(500);
-
-            return $response;
         }
+
+        return new JsonResponse(['error' => $invalidCredentialsMessage]);
     }
 }

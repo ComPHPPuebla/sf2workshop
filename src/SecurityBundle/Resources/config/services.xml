@@ -8,6 +8,7 @@
             <argument type="service" id="db.connection" />
         </service>
         <service id="controller.login" class="SecurityBundle\Controllers\LoginController">
+            <argument type="service" id="form.factory" />
             <call method="setView">
                 <argument type="service" id="view" />
             </call>
@@ -15,6 +16,7 @@
         <service id="controller.authenticate" class="SecurityBundle\Controllers\AuthenticateController">
             <argument type="service" id="repository.all_users" />
             <argument type="service" id="session" />
+            <argument type="service" id="form.factory" />
         </service>
         <service id="controller.logout" class="SecurityBundle\Controllers\LogoutController">
             <argument type="service" id="session" />
