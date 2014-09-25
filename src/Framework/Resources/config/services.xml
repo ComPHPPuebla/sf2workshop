@@ -19,15 +19,57 @@
         <parameter key="twig.env.options" type="collection">
             <parameter key="cache">app/cache/twig</parameter>
         </parameter>
+        <parameter key="form.twig_bridge_dir">vendor/symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form</parameter>
+        <parameter key="form.default_theme" type="collection">
+            <parameter>form_div_layout.html.twig</parameter>
+        </parameter>
     </parameters>
 
     <services>
+        <service id="validator" class="Symfony\Component\Validator\Validator" factory-class="Symfony\Component\Validator\Validation" factory-method="createValidator" />
+        <service id="form.validator_extension" class="Symfony\Component\Form\Extension\Validator\ValidatorExtension">
+            <argument type="service" id="validator" />
+        </service>
+        <service id="form.factory_builder" class="Symfony\Component\Form\FormFactoryBuilder" factory-class="Symfony\Component\Form\Forms" factory-method="createFormFactoryBuilder">
+            <call method="addExtension">
+                <argument type="service" id="form.http_extension" />
+            </call>
+            <call method="addExtension">
+                <argument type="service" id="form.validator_extension" />
+            </call>
+        </service>
+        <service id="form.factory" class="Symfony\Component\Form\FormFactory" factory-service="form.factory_builder" factory-method="getFormFactory" />
+        <service id="form.http_extension" class="Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension" />
+        <service id="form.renderer_engine" class="Symfony\Bridge\Twig\Form\TwigRendererEngine">
+            <argument>%form.default_theme%</argument>
+            <call method="setEnvironment">
+                <argument type="service" id="twig.environment" />
+            </call>
+        </service>
+        <service id="form.renderer" class="Symfony\Bridge\Twig\Form\TwigRenderer">
+            <argument type="service" id="form.renderer_engine" />
+        </service>
+        <service id="form.extension" class="Symfony\Bridge\Twig\Extension\FormExtension">
+            <argument type="service" id="form.renderer" />
+        </service>
+        <service id="translator" class="Symfony\Component\Translation\Translator">
+            <argument>en</argument>
+        </service>
+        <service id="translation.extension" class="Symfony\Bridge\Twig\Extension\TranslationExtension">
+            <argument type="service" id="translator" />
+        </service>
         <service id="twig.loader" class="Twig_Loader_Filesystem">
             <argument>%templates.path%</argument>
         </service>
         <service id="twig.environment" class="Twig_Environment">
             <argument type="service" id="twig.loader" />
             <argument>%twig.env.options%</argument>
+            <call method="addExtension">
+                <argument type="service" id="form.extension" />
+            </call>
+            <call method="addExtension">
+                <argument type="service" id="translation.extension" />
+            </call>
         </service>
         <service id="view" class="Framework\View\TwigEngine">
             <argument type="service" id="twig.environment" />

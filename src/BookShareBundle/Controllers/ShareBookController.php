@@ -17,7 +17,7 @@ class ShareBookController
     {
         is_user_logged();
 
-	    $allAuthors = $this->allBooks->allAuthors();
+        $allAuthors = $this->allBooks->allAuthors();
 
         return $this->renderResponse('share-book.html.twig', ['authors' => $allAuthors]);
     }

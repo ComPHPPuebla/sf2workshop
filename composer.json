@@ -18,7 +18,10 @@
         "symfony/dependency-injection": "~2.0",
         "symfony/expression-language": "~2.0",
         "symfony/event-dispatcher": "~2.0",
-        "twig/twig": "~1.0"
+        "twig/twig": "~1.0",
+        "symfony/form": "~2.0",
+        "symfony/twig-bridge": "~2.0",
+        "symfony/validator": "~2.0"
     },
     "autoload": {
         "psr-0": {

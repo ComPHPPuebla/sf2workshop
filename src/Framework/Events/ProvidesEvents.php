@@ -1,7 +1,6 @@
 <?php
 namespace Framework\Events;
 
-
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait ProvidesEvents
@@ -18,4 +17,4 @@ trait ProvidesEvents
     {
         $this->dispatcher->addListener($eventName, $listener);
     }
-} 
+}

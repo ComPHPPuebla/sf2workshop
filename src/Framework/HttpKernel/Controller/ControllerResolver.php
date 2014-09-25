@@ -2,7 +2,6 @@
 namespace Framework\HttpKernel\Controller;
 
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver as BaseControllerResolver;
 use InvalidArgumentException;
 
@@ -26,6 +25,7 @@ class ControllerResolver extends BaseControllerResolver
             } else {
                 throw new InvalidArgumentException('Controller cannot be created');
             }
+
             return [$controller, $action];
         }
     }

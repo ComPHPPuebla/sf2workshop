@@ -8,10 +8,10 @@ use BookShare\Persistence\Pdo\AllBooks;
 class SearchBooksController
 {
     use Controller;
-	
-	protected $allBooks;
-	
-	public function __construct(AllBooks $allBooks)
+
+    protected $allBooks;
+
+    public function __construct(AllBooks $allBooks)
     {
         $this->allBooks = $allBooks;
     }
@@ -19,7 +19,6 @@ class SearchBooksController
     public function searchBooksAction(Request $request)
     {
         is_user_logged();
-
 
         $searchType = $request->request->filter('search-type');
         $searchTerm = $request->request->filter('book-search');

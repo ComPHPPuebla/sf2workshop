@@ -32,4 +32,4 @@ class AllReaders implements AllReadersInterface
         $statement = $this->connection->prepare($sql);
         $statement->execute([$reader->points(), $reader->username()]);
     }
-} 
+}

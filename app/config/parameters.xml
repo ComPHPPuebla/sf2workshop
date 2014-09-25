@@ -8,6 +8,7 @@
             <parameter>app/theme</parameter>
             <parameter>src/BookShareBundle/Resources/views/Book</parameter>
             <parameter>src/SecurityBundle/Resources/views/User</parameter>
+            <parameter>%form.twig_bridge_dir%</parameter>
         </parameter>
         <parameter key="db.dsn">mysql:host=localhost;dbname=bookshare</parameter>
         <parameter key="db.user">bshare_user</parameter>
