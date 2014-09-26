@@ -10,7 +10,12 @@
             <parameter>src/SecurityBundle/Resources/views/User</parameter>
             <parameter>%form.twig_bridge_dir%</parameter>
         </parameter>
+        <parameter key="doctrine.mappings" type="collection">
+            <parameter>src/SecurityBundle/Resources/config/doctrine</parameter>
+            <parameter>src/BookShareBundle/Resources/config/doctrine</parameter>
+        </parameter>
         <parameter key="db.dsn">mysql:host=localhost;dbname=bookshare</parameter>
+        <parameter key="db.name">bookshare</parameter>
         <parameter key="db.user">bshare_user</parameter>
         <parameter key="db.password">book_share_us3r</parameter>
     </parameters>

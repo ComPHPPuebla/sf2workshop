@@ -45,14 +45,14 @@ class AuthenticateController
         $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
         if ($form->isValid()) {
             $credentials = $form->getData();
-
+            
             $user = $this->allUsers->ofUsername($credentials['username']);
 
-            if (!$user || !password_verify($credentials['password'], $user['password'])) {
+            if (!$user || !password_verify($credentials['password'], $user->password())) {
                 return new JsonResponse(['error' => $invalidCredentialsMessage]);
             }
 
-            $user['password'] = null;
+            $user->clearPassword();
             $this->session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
 
             return new JsonResponse(['success' => true]);

@@ -4,7 +4,8 @@ namespace Security;
 interface AllUsers
 {
     /**
-     * @param string $username
+     * @param  string $username
+     * @return User
      */
     public function ofUsername($username);
 }
