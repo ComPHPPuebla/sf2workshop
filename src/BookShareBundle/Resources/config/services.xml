@@ -49,12 +49,14 @@
         </service>
         <service id="controller.share_Book" class="BookShareBundle\Controllers\ShareBookController">
             <argument type="service" id="repository.all_books" />
+            <argument type="service" id="form.factory" />
             <call method="setView">
                 <argument type="service" id="view" />
             </call>
         </service>
         <service id="controller.save_book" class="BookShareBundle\Controllers\SaveBookController">
             <argument type="service" id="repository.all_books" />
+            <argument type="service" id="form.factory" />
             <call method="setDispatcher">
                 <argument type="service" id="events.dispatcher" />
             </call>
