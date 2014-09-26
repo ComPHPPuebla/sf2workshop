@@ -1,18 +1,18 @@
 <?php
 namespace BookShareBundle\Controllers;
 
+use BookShare\Author;
+use BookShare\Book;
 use BookShare\BooksEvents;
 use BookShare\ReaderPointsUpdateEvent;
-use BookShare\Persistence\Pdo\AllBooks;
+use BookShare\AllBooks;
+use BookShareBundle\Forms\Types\ShareBookFormType;
 use Framework\Controller;
 use Framework\Events\ProvidesEvents;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use BookShare\Book;
-use BookShare\Author;
-use BookShareBundle\Forms\Types\ShareBookFormType;
 
 class SaveBookController
 {
