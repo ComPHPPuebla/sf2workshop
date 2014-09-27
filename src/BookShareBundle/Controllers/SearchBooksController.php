@@ -1,21 +1,29 @@
 <?php
 namespace BookShareBundle\Controllers;
 
+use BookShare\AllBooks;
 use Framework\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use BookShare\Persistence\Pdo\AllBooks;
 
 class SearchBooksController
 {
     use Controller;
 
+    /** @var AllBooks */
     protected $allBooks;
 
+    /**
+     * @param AllBooks $allBooks
+     */
     public function __construct(AllBooks $allBooks)
     {
         $this->allBooks = $allBooks;
     }
 
+    /**
+     * @param  Request                                    $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function searchBooksAction(Request $request)
     {
         is_user_logged();

@@ -2,14 +2,12 @@
 namespace SecurityBundle\Controllers;
 
 use Framework\Controller;
+use Security\AllUsers;
 use SecurityBundle\Forms\Types\LoginFormType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Security\Persistence\Pdo\AllUsers;
-use PDOException;
 
 class AuthenticateController
 {
@@ -47,14 +45,14 @@ class AuthenticateController
         $invalidCredentialsMessage = 'The username or password you entered were incorrect.';
         if ($form->isValid()) {
             $credentials = $form->getData();
-
+            
             $user = $this->allUsers->ofUsername($credentials['username']);
 
-            if (!$user || !password_verify($credentials['password'], $user['password'])) {
+            if (!$user || !password_verify($credentials['password'], $user->password())) {
                 return new JsonResponse(['error' => $invalidCredentialsMessage]);
             }
 
-            $user['password'] = null;
+            $user->clearPassword();
             $this->session->set(APP_SESSION_NAMESPACE, ['user' => $user]);
 
             return new JsonResponse(['success' => true]);

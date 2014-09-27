@@ -22,11 +22,6 @@ class ShareBookFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $authors = $this->allBooks->allAuthors();
-        $choices = [];
-        foreach ($authors as $author ) {
-            $choices[$author['author_id']] = $author['name'];
-        }
         $builder
             ->add('title', 'text', [
                 'label' => 'Title',
@@ -34,7 +29,7 @@ class ShareBookFormType extends AbstractType
                 'constraints' => new NotBlank(),
             ])
             ->add('author-id', 'choice', [
-                'choices'   => $choices,
+                'choices'   => $this->getAuthorChoices(),
                 'label' => 'Author',
                 'attr' => ['class' => 'form-control'],
                 'constraints' => new NotBlank(),
@@ -47,6 +42,20 @@ class ShareBookFormType extends AbstractType
                 'label' => 'Submit',
                 'attr' => ['class' => 'btn btn-default'],
             ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAuthorChoices()
+    {
+        $authors = $this->allBooks->allAuthors();
+        $choices = [];
+        foreach ($authors as $author) {
+            $choices[$author['author_id']] = $author['name'];
+        }
+
+        return $choices;
     }
 
     /**

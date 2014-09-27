@@ -4,6 +4,7 @@
    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="db.driver">pdo_mysql</parameter>
         <parameter key="db.error_mode" type="constant">PDO::ATTR_ERRMODE</parameter>
         <parameter key="db.error_exception" type="constant">PDO::ERRMODE_EXCEPTION</parameter>
         <parameter key="db.fetch_mode" type="constant">PDO::ATTR_DEFAULT_FETCH_MODE</parameter>
@@ -22,6 +23,12 @@
         <parameter key="form.twig_bridge_dir">vendor/symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form</parameter>
         <parameter key="form.default_theme" type="collection">
             <parameter>form_div_layout.html.twig</parameter>
+        </parameter>
+        <parameter key="doctrine.params" type="collection">
+            <parameter key="driver">%db.driver%</parameter>
+            <parameter key="user">%db.user%</parameter>
+            <parameter key="password">%db.password%</parameter>
+            <parameter key="dbname">%db.name%</parameter>
         </parameter>
     </parameters>
 
@@ -87,6 +94,15 @@
                 <argument>%db.fetch_assoc%</argument>
             </call>
         </service>
+        <service id="doctrine.config" class="Doctrine\ORM\Configuration" factory-class="Doctrine\ORM\Tools\Setup" factory-method="createXMLMetadataConfiguration">
+            <argument>%doctrine.mappings%</argument>
+            <argument>true</argument>
+        </service>
+        <service id="doctrine.entity_manager" class="Doctrine\ORM\EntityManager" factory-class="Doctrine\ORM\EntityManager" factory-method="create">
+            <argument>%doctrine.params%</argument>
+            <argument type="service" id="doctrine.config" />
+        </service>
+        <service id="doctrine.repository" factory-service="doctrine.entity_manager" factory-method="getRepository" abstract="true" />
         <service id="session" class="Symfony\Component\HttpFoundation\Session\Session">
             <call method="start" />
         </service>

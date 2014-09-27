@@ -9,8 +9,11 @@
     </parameters>
 
     <services>
-		<service id="repository.all_books" class="BookShare\Persistence\Pdo\AllBooks">
+		<!-- service id="repository.all_books" class="BookShare\Persistence\Pdo\AllBooks">
             <argument type="service" id="db.connection" />
+        </service -->
+        <service id="repository.all_books" class="BookShare\Persistence\Doctrine2\AllBooks" parent="doctrine.repository">
+            <argument>BookShare\Book</argument>
         </service>
         <service id="repository.all_readers" class="BookShare\Persistence\Pdo\AllReaders">
             <argument type="service" id="db.connection" />

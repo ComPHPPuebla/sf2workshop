@@ -1,7 +1,7 @@
 <?php
 namespace BookShareBundle\Controllers;
 
-use BookShare\Persistence\Pdo\AllBooks;
+use BookShare\AllBooks;
 use BookShareBundle\Forms\Types\ShareBookFormType;
 use Framework\Controller;
 use Symfony\Component\Form\FormFactory;

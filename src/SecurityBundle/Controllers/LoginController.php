@@ -9,9 +9,7 @@ class LoginController
 {
     use Controller;
 
-    /**
-     * @var FormFactory
-     */
+    /** @var FormFactory */
     protected $formFactory;
 
     /**
