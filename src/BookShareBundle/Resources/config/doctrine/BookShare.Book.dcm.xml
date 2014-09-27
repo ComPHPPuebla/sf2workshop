@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="BookShare\Book" table="book" repository-class="BookShare\Persistence\Doctrine2\AllBooks">
+        <id name="bookId" type="integer" column="book_id" >
+            <generator strategy="AUTO" />
+        </id>
+        <field name="title" type="string" length="200" />
+        <field name="filename" type="string" length="200" />
+        <many-to-one field="author" target-entity="BookShare\Author">
+            <join-column name="author_id" referenced-column-name="author_id" />
+        </many-to-one>
+    </entity>
+
+</doctrine-mapping>

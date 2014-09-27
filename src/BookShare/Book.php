@@ -52,4 +52,9 @@ class Book
     {
         return $this->author->id();
     }
+
+    public function bookId()
+    {
+        return $this->bookId;
+    }
 }
